@@ -6,4 +6,5 @@ public class Employee
     public string Gender { get; set; }
     public string Profession { get; set; }
     public string Languages { get; set; }
+    public string Country { get; set; }
 }
