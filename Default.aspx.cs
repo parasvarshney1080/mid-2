@@ -26,6 +26,7 @@ namespace DataTableCRUD
             dataTable.Columns.Add("Gender", typeof(string));
             dataTable.Columns.Add("Profession", typeof(string));
             dataTable.Columns.Add("Languages", typeof(string));
+            dataTable.Columns.Add("Country", typeof(string));
             ViewState["EmployeeTable"] = dataTable;
         }
 
@@ -55,6 +56,8 @@ namespace DataTableCRUD
             if (!string.IsNullOrEmpty(languages))
                 languages = languages.TrimEnd(',');
 
+            string country = txtCountry.Text;
+
             dataTable = (DataTable)ViewState["EmployeeTable"];
 
             if (id == 0) // Create new record
@@ -66,6 +69,7 @@ namespace DataTableCRUD
                 newRow["Gender"] = gender;
                 newRow["Profession"] = profession;
                 newRow["Languages"] = languages;
+                newRow["Country"] = country;
                 dataTable.Rows.Add(newRow);
             }
             else // Update existing record
@@ -76,6 +80,7 @@ namespace DataTableCRUD
                 row["Gender"] = gender;
                 row["Profession"] = profession;
                 row["Languages"] = languages;
+                row["Country"] = country;
             }
 
             ViewState["EmployeeTable"] = dataTable;
@@ -96,6 +101,7 @@ namespace DataTableCRUD
             txtAge.Text = row["Age"].ToString();
             rblGender.SelectedValue = row["Gender"].ToString();
             txtProfession.Text = row["Profession"].ToString();
+            txtCountry.Text = row["Country"].ToString();
 
             string languages = row["Languages"].ToString();
             chkHindi.Checked = languages.Contains("Hindi");
@@ -126,6 +132,7 @@ namespace DataTableCRUD
             chkHindi.Checked = false;
             chkEnglish.Checked = false;
             chkGujarati.Checked = false;
+            txtCountry.Text = string.Empty;
         }
     }
 }
