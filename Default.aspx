@@ -17,7 +17,8 @@
                     <asp:BoundField HeaderText="Age" DataField="Age" />
                     <asp:BoundField HeaderText="Gender" DataField="Gender" />
                     <asp:BoundField HeaderText="Profession" DataField="Profession" />
-                    <asp:BoundField HeaderText="Language Known" DataField="Languages" />
+                    <asp:BoundField HeaderText="Languages Known" DataField="Languages" />
+                    <asp:BoundField HeaderText="Country" DataField="Country" />
                     <asp:TemplateField HeaderText="Actions">
                         <ItemTemplate>
                             <asp:Button ID="btnEdit" runat="server" Text="Edit" OnClick="btnEdit_Click" CommandArgument='<%# Eval("Id") %>' />
@@ -50,8 +51,27 @@
             <asp:CheckBox ID="chkEnglish" runat="server" Text="English" />
             <asp:CheckBox ID="chkGujarati" runat="server" Text="Gujarati" />
             <br />
+            <label>Country:</label>
+            <asp:TextBox ID="txtCountry" runat="server"></asp:TextBox>
+            <br />
             <asp:Button ID="btnSave" runat="server" Text="Save" OnClick="btnSave_Click" />
         </div>
+        <br />
+        <div>
+            <<nav>
+                <ul>
+                    <li><a href="#" onclick="selectCountry('India')">India</a></li>
+                    <li><a href="#" onclick="selectCountry('Pakistan')">Pakistan</a></li>
+                    <li><a href="#" onclick="selectCountry('China')">China</a></li>
+                    <li><a href="#" onclick="selectCountry('Canada')">Canada</a></li>
+                </ul>
+            </nav>
+        </div>
     </form>
+    <script>
+        function selectCountry(country) {
+            document.getElementById('<%=txtCountry.ClientID %>').value = country;
+        }
+    </script>
 </body>
 </html>
