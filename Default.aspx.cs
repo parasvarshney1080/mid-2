@@ -39,53 +39,56 @@ namespace DataTableCRUD
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            int id = Convert.ToInt32(hdnId.Value);
-            string name = txtName.Text;
-            int age = Convert.ToInt32(txtAge.Text);
-            string gender = rblGender.SelectedValue;
-            string profession = txtProfession.Text;
-
-            string languages = "";
-            if (chkHindi.Checked)
-                languages += "Hindi,";
-            if (chkEnglish.Checked)
-                languages += "English,";
-            if (chkGujarati.Checked)
-                languages += "Gujarati,";
-
-            if (!string.IsNullOrEmpty(languages))
-                languages = languages.TrimEnd(',');
-
-            string country = txtCountry.Text;
-
-            dataTable = (DataTable)ViewState["EmployeeTable"];
-
-            if (id == 0) // Create new record
+            if (Page.IsValid)
             {
-                DataRow newRow = dataTable.NewRow();
-                newRow["Id"] = dataTable.Rows.Count + 1;
-                newRow["Name"] = name;
-                newRow["Age"] = age;
-                newRow["Gender"] = gender;
-                newRow["Profession"] = profession;
-                newRow["Languages"] = languages;
-                newRow["Country"] = country;
-                dataTable.Rows.Add(newRow);
-            }
-            else // Update existing record
-            {
-                DataRow row = dataTable.Rows.Find(id);
-                row["Name"] = name;
-                row["Age"] = age;
-                row["Gender"] = gender;
-                row["Profession"] = profession;
-                row["Languages"] = languages;
-                row["Country"] = country;
-            }
+                int id = Convert.ToInt32(hdnId.Value);
+                string name = txtName.Text;
+                int age = Convert.ToInt32(txtAge.Text);
+                string gender = rblGender.SelectedValue;
+                string profession = txtProfession.Text;
 
-            ViewState["EmployeeTable"] = dataTable;
-            ClearForm();
-            BindGrid();
+                string languages = "";
+                if (chkHindi.Checked)
+                    languages += "Hindi,";
+                if (chkEnglish.Checked)
+                    languages += "English,";
+                if (chkGujarati.Checked)
+                    languages += "Gujarati,";
+
+                if (!string.IsNullOrEmpty(languages))
+                    languages = languages.TrimEnd(',');
+
+                string country = ddlCountry.SelectedValue;
+
+                dataTable = (DataTable)ViewState["EmployeeTable"];
+
+                if (id == 0) // Create new record
+                {
+                    DataRow newRow = dataTable.NewRow();
+                    newRow["Id"] = dataTable.Rows.Count + 1;
+                    newRow["Name"] = name;
+                    newRow["Age"] = age;
+                    newRow["Gender"] = gender;
+                    newRow["Profession"] = profession;
+                    newRow["Languages"] = languages;
+                    newRow["Country"] = country;
+                    dataTable.Rows.Add(newRow);
+                }
+                else // Update existing record
+                {
+                    DataRow row = dataTable.Rows.Find(id);
+                    row["Name"] = name;
+                    row["Age"] = age;
+                    row["Gender"] = gender;
+                    row["Profession"] = profession;
+                    row["Languages"] = languages;
+                    row["Country"] = country;
+                }
+
+                ViewState["EmployeeTable"] = dataTable;
+                ClearForm();
+                BindGrid();
+            }
         }
 
         protected void btnEdit_Click(object sender, EventArgs e)
@@ -101,12 +104,14 @@ namespace DataTableCRUD
             txtAge.Text = row["Age"].ToString();
             rblGender.SelectedValue = row["Gender"].ToString();
             txtProfession.Text = row["Profession"].ToString();
-            txtCountry.Text = row["Country"].ToString();
 
             string languages = row["Languages"].ToString();
             chkHindi.Checked = languages.Contains("Hindi");
             chkEnglish.Checked = languages.Contains("English");
             chkGujarati.Checked = languages.Contains("Gujarati");
+
+            string country = row["Country"].ToString();
+            ddlCountry.SelectedValue = country;
         }
 
         protected void btnDelete_Click(object sender, EventArgs e)
@@ -132,7 +137,7 @@ namespace DataTableCRUD
             chkHindi.Checked = false;
             chkEnglish.Checked = false;
             chkGujarati.Checked = false;
-            txtCountry.Text = string.Empty;
+            ddlCountry.SelectedIndex = 0;
         }
     }
 }
