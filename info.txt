@@ -1,0 +1,5 @@
+Update the references to the controller classes in the "Default.aspx" file as follows:
+For the Employee Records section, update the Inherits attribute to Inherits="DataTableCRUD.Controllers.EmployeeRecordsController".
+For the Add/Edit Employee section, update the Inherits attribute to Inherits="DataTableCRUD.Controllers.AddEditEmployeeController".
+For the All Data Field Textboxes section, update the Inherits attribute to Inherits="DataTableCRUD.Controllers.AllDataFieldTextboxesController".
+With these changes, you have divided the functionality into separate controllers, and you can implement specific logic for each controller accordingly.
