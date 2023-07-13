@@ -1,0 +1,7 @@
+To implement user control management in the above project, you can create a separate user control for the Employee Details section and use it in the Default.aspx page. Here's how you can do it:
+
+Create a new user control file called "EmployeeDetails.ascx" in your project. This file will contain the markup and code for the Employee Details section.
+
+In Visual Studio, right-click on your project, select "Add", and then choose "Web User Control" to create the user control file.
+
+Open the "EmployeeDetails.ascx" file and replace its content with the following code:
