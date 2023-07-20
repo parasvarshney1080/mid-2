@@ -1,0 +1,398 @@
+Default.aspx file
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Default.aspx.cs" MasterPageFile="~/Site.Master" Inherits="DataTableCRUD.Default" %>
+
+<%@ Register Src="EmployeeDetails.ascx" TagPrefix="uc" TagName="EmployeeDetails" %>
+
+<asp:Content runat="server" ID="con" ContentPlaceHolderID="ContentPlaceHolder1">
+
+  
+    <div class="mt-2">
+        <uc:EmployeeDetails ID="EmployeeDetails1" runat="server" OnEditClicked="EmployeeDetails1_EditClicked" OnDeleteClicked="EmployeeDetails1_DeleteClicked" />
+    </div>
+      <div class="row mt-2">
+        <div class="col-md-12">
+                <asp:GridView ID="GridView1" CssClass="table table-responsive" runat="server" AutoGenerateColumns="true">
+                    <asp:Button ID="btnEdit" runat="server" Text="Edit" OnClick="btnEdit_Click" />
+                    <asp:LinkButton ID="DeleteButton" runat="server" Text="Delete" OnClick="DeleteButton_Click" />
+                </asp:GridView>
+        </div>
+    </div>
+</asp:Content>
+
+Default.aspx.cs
+
+using System;
+using System.Linq;
+using System.Data;
+using System.Web.UI.WebControls;
+using WebApplication21;
+
+namespace DataTableCRUD
+{
+    public partial class Default : System.Web.UI.Page
+    {
+        private DataTable dataTable;
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!IsPostBack)
+            {
+                CreateDataTable();
+                BindGrid();
+            }
+            this.EmployeeDetails1.bindDataClick += new EventHandler<EmployeeDetailsEventArgs>(this.EmployeeDetails1_SaveClicked);
+            // Subscribe to the events in the EmployeeDetails control
+            this.EmployeeDetails1.EditClicked += new EventHandler<EmployeeDetailsEventArgs>(this.EmployeeDetails1_EditClicked);
+            this.EmployeeDetails1.DeleteClicked += new EventHandler<EmployeeDetailsEventArgs>(this.EmployeeDetails1_DeleteClicked);
+        }
+
+        private void CreateDataTable()
+        {
+            if (Session["EmployeeTable"] == null)
+            {
+                dataTable = new DataTable();
+                dataTable.Columns.Add("Id", typeof(int));
+                dataTable.Columns.Add("Name", typeof(string));
+                dataTable.Columns.Add("Age", typeof(int));
+                dataTable.Columns.Add("Gender", typeof(string));
+                dataTable.Columns.Add("Profession", typeof(string));
+                dataTable.Columns.Add("Languages", typeof(string));
+                dataTable.Columns.Add("Country", typeof(string));
+                Session["EmployeeTable"] = dataTable;
+            }
+
+        }
+
+        public void BindGrid()
+        {
+            dataTable = (DataTable)Session["EmployeeTable"];
+            GridView1.DataSource = dataTable;
+            GridView1.DataBind();
+
+        }
+        
+
+
+        public void btnSave_Click(object sender, EventArgs e)
+        {
+            
+
+        }
+
+
+        public void btnEdit_Click(object sender, EventArgs e)
+        {
+           
+            
+        }
+
+        public void EmployeeDetails1_DeleteClicked(object sender, EventArgs e)
+        {
+             
+        }
+        protected void btnAddNew_Click(object sender, EventArgs e)
+        {
+
+        }
+        protected void EmployeeDetails1_SaveClicked(object sender, EmployeeDetailsEventArgs e)
+        {
+            int id = e.Id;
+            string name = e.Name;
+            int age = e.Age;
+            string gender = e.Gender;
+            string profession = e.Profession;
+            string language = e.Languages;
+            string country = e.Country;
+            dataTable = (DataTable)Session["EmployeeTable"];
+            if (dataTable == null)
+            {
+                CreateDataTable();
+                dataTable= (DataTable)Session["EmployeeTable"];
+            }
+            if (id ==0 || dataTable==null)
+            {
+
+                DataRow newRow = dataTable.NewRow();
+                newRow["Id"] = dataTable.Rows.Count + 1;
+                newRow["Name"] = name;
+                newRow["Age"] = age;
+                newRow["Gender"] = gender;
+                newRow["Profession"] = profession;
+                newRow["Languages"] = language;
+                newRow["Country"] = country;
+                dataTable.Rows.Add(newRow);
+                dataTable.AcceptChanges();
+
+            }
+            else
+            {
+                DataRow row = dataTable.Rows.Find(id);
+                if (row != null)
+                {
+                    row["Name"] = name;
+                    row["Age"] = age;
+                    row["Gender"] = gender;
+                    row["Profession"] = profession;
+                    row["Languages"] = language;
+                    row["Country"] = country;
+                }
+
+            }
+            Session["EmployeeeTable"] = dataTable;
+            ClearForm();
+            BindGrid();
+
+
+
+        }
+
+
+
+
+        private void ClearForm()
+        {
+            
+        }
+    }
+}
+
+EmployeeDetails.ascx
+
+<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="EmployeeDetails.ascx.cs" Inherits="WebApplication21.EmployeeDetails" %>
+
+
+
+<h2>Add/Edit Employee</h2>
+<hr />
+<asp:HiddenField ID="hdnId" runat="server" />
+<div class="row">
+    <div class="col-5">
+
+        <div class="form-inline">
+            <div class="form-group">
+                <label for="txtName" class="mr-2">Name</label>
+                <asp:TextBox ID="txtName" runat="server" CssClass="form-control"></asp:TextBox>
+                <asp:RequiredFieldValidator ID="rfvName" runat="server" ControlToValidate="txtName" ErrorMessage="Name is required." />
+            </div>
+        </div>
+        <div class="form-inline">
+            <div class="form-group">
+                <label for="txtAge" class="mr-2">Age</label>
+                <asp:TextBox ID="txtAge" runat="server" Type="number" CssClass="form-control"></asp:TextBox>
+                <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtAge" ErrorMessage="Age is required." />
+                <asp:RequiredFieldValidator ID="rfvAge" runat="server" ControlToValidate="txtAge" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="txtProfession">Profession</label>
+            <asp:TextBox ID="txtProfession" runat="server" CssClass="form-control"></asp:TextBox>
+            <asp:RequiredFieldValidator ID="rfvProfession" runat="server" ControlToValidate="txtProfession" ErrorMessage="Profession is required." />
+        </div>
+
+        <div class="form-inline">
+            <div class="form-group">
+                <label for="rblGender">Gender</label>
+                <asp:RadioButtonList ID="rblGender" runat="server" ValidationGroup="EmployeeValidation" RepeatDirection="Horizontal">
+                    <asp:ListItem Text="Male" Value="Male"></asp:ListItem>
+                    <asp:ListItem Text="Female" Value="Female"></asp:ListItem>
+                </asp:RadioButtonList>
+                <asp:RequiredFieldValidator ID="rfvGender" runat="server" ControlToValidate="rblGender" ErrorMessage="Gender is required." />
+            </div>
+        </div>
+
+        <div class="form-inline">
+            <div class="form-group">
+                <label>Known Languages</label>
+                <div class="form-check form-check-inline">
+                    <asp:CheckBox ID="chkHindi" runat="server" Text="Hindi" ValidationGroup="EmployeeValidation" />
+                    <asp:CheckBox ID="chkEnglish" runat="server" Text="English" ValidationGroup="EmployeeValidation" />
+                    <asp:CheckBox ID="chkGujarati" runat="server" Text="Gujarati" ValidationGroup="EmployeeValidation" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Country</label>
+            <asp:DropDownList CssClass="form-select" ID="ddlCountry" runat="server">
+                <asp:ListItem Text="India" Value="India"></asp:ListItem>
+                <asp:ListItem Text="Pakistan" Value="Pakistan"></asp:ListItem>
+                <asp:ListItem Text="China" Value="China"></asp:ListItem>
+                <asp:ListItem Text="Canada" Value="Canada"></asp:ListItem>
+            </asp:DropDownList>
+        </div>
+
+    </div>
+</div>
+<asp:Button ID="btnSave" runat="server" Text="Save" OnClick="btnSave_Click" CssClass="mt-4 btn btn-primary" />
+<asp:Button ID="btnEdit" runat="server" Text="Edit" OnClick="btnEdit_Click" />
+<asp:Button ID="DeleteButton" runat="server" Text="server" OnClick="DeleteButton_Click" />
+
+
+EmployeeDetails.ascx.cs 
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+
+namespace WebApplication21
+{
+    public partial class EmployeeDetails : System.Web.UI.UserControl
+    {
+        private DataTable dataTable;
+        public event EventHandler<EmployeeDetailsEventArgs> bindDataClick;
+        protected void Page_Load(object sender, EventArgs e)
+        {
+
+        }
+        public void BindGrid()
+        {
+
+        }
+        protected void btnSave_Click(object sender, EventArgs e)
+        {
+            if (Page.IsValid)
+            {
+
+                int id = hdnId.Value == "" ? 0 : Convert.ToInt32(hdnId.Value);
+                string name = txtName.Text;
+                int age = Convert.ToInt32(txtAge.Text);
+                string gender = rblGender.SelectedValue;
+                string profession = txtProfession.Text;
+
+                string languages = "";
+                if (chkHindi.Checked)
+                    languages += "Hindi,";
+                if (chkEnglish.Checked)
+                    languages += "English,";
+                if (chkGujarati.Checked)
+                    languages += "Gujarati,";
+
+                if (!string.IsNullOrEmpty(languages))
+                    languages = languages.TrimEnd(',');
+
+                string country = ddlCountry.SelectedValue;
+
+
+                EmployeeDetailsEventArgs args = new EmployeeDetailsEventArgs(id, name, age, gender, profession, languages, country);
+                Session["EmployeeeTable"] = dataTable;
+                ClearForm();
+                bindDataClick.Invoke(this, args);
+
+
+
+
+            }
+        }
+        protected void EmployeeDetails1_EditClicked(object sender, EventArgs e)
+        {
+            
+            Button EditButton_Click = (Button)sender;
+            int id = Convert.ToInt32(EditButton_Click.CommandArgument);
+
+            dataTable = (DataTable)Session["EmployeeTable"];
+            DataRow row = dataTable.Rows.Find(id);
+
+            hdnId.Value = row["Id"].ToString();
+            txtName.Text = row["Name"].ToString();
+            txtAge.Text = row["Age"].ToString();
+            rblGender.SelectedValue = row["Gender"].ToString();
+            txtProfession.Text = row["Profession"].ToString();
+
+            string languages = row["Languages"].ToString();
+            chkHindi.Checked = languages.Contains("Hindi");
+            chkEnglish.Checked = languages.Contains("English");
+            chkGujarati.Checked = languages.Contains("Gujarati");
+
+            string country = row["Country"].ToString();
+            ddlCountry.SelectedValue = country;
+
+        }
+
+        protected void EmployeeDetails1_DeleteClicked(object sender, EventArgs e)
+        {
+            Button DeleteButton_Click = (Button)sender;
+            int id = Convert.ToInt32(DeleteButton_Click.CommandArgument);
+
+            dataTable = (DataTable)Session["EmployeeTable"];
+            if (dataTable != null)
+            {
+                for (int i = dataTable.Rows.Count - 1; i >= 0; i--)
+                {
+                    DataRow dr = dataTable.Rows[i];
+                    if (Convert.ToInt32(dr["id"]) == id)
+                        dr.Delete();
+                }
+                dataTable.AcceptChanges();
+            }
+
+            BindGrid();
+
+
+        }
+
+
+        protected virtual void OnSaveClicked(EmployeeDetailsEventArgs e)
+        {
+            SaveClicked?.Invoke(this, e);
+
+        }
+        protected void btnEdit_Click(object sender, EventArgs e)
+        {
+            EditClicked?.Invoke(this, e);
+        }
+        protected void DeleteButton_Click(object sender, EventArgs e)
+        {
+            DeleteClicked?.Invoke(this, e);
+        }
+
+
+
+        public event EventHandler<EmployeeDetailsEventArgs> SaveClicked;
+
+        public event EventHandler<EmployeeDetailsEventArgs> EditClicked;
+        public event EventHandler<EmployeeDetailsEventArgs> DeleteClicked;
+
+        private void ClearForm()
+        {
+            hdnId.Value = "0";
+            txtName.Text = string.Empty;
+            txtAge.Text = string.Empty;
+            rblGender.ClearSelection();
+            txtProfession.Text = string.Empty;
+            chkHindi.Checked = false;
+            chkEnglish.Checked = false;
+            chkGujarati.Checked = false;
+            ddlCountry.SelectedIndex = 0;
+
+        }
+
+    }
+    public class EmployeeDetailsEventArgs : EventArgs
+    {
+        public int Id { get; private set; }
+        public string Name { get; private set; }
+        public int Age { get; private set; }
+        public string Gender { get; private set; }
+        public string Profession { get; private set; }
+        public string Languages { get; private set; }
+
+        public string Country { get; private set; }
+        public EmployeeDetailsEventArgs(int id, string name, int age, string gender, string profession, string languages, string country)
+        {
+            Id = id;
+            Name = name;
+            Age = age;
+            Gender = gender;
+            Profession = profession;
+            Country = country;
+            Languages = languages;
+
+
+        }
+    }
+}
+
