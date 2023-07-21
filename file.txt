@@ -480,3 +480,26 @@ Severity	Code	Description	Project	File	Line	Suppression State
 Message	IDE1006	Naming rule violation: These words must begin with upper case characters: lnkDelete_Command	WebApplication21	C:\Users\A0851291\source\repos\WebApplication21\WebApplication21\EmployeeDetails.ascx.cs	75	Active
 
 string language = string.Join(",", ((CheckBoxList)row.FindControl("cblLanguage")).Items.Cast<ListItem>().Where(li => li.Selected).Select(li => li.Text).ToList());
+
+
+
+The GridView 'GridView1' fired event RowDeleting which wasn't handled.
+Description: An unhandled exception occurred during the execution of the current web request. Please review the stack trace for more information about the error and where it originated in the code.
+
+Exception Details: System.Web.HttpException: The GridView 'GridView1' fired event RowDeleting which wasn't handled.
+
+Source Error:
+
+An unhandled exception was generated during the execution of the current web request. Information regarding the origin and location of the exception can be identified using the exception stack trace below.
+
+Stack Trace:
+
+
+[HttpException (0x80004005): The GridView 'GridView1' fired event RowDeleting which wasn't handled.]
+   System.Web.UI.WebControls.GridView.OnRowDeleting(GridViewDeleteEventArgs e) +373
+   System.Web.UI.WebControls.GridView.HandleDelete(GridViewRow row, Int32 rowIndex) +945
+   System.Web.UI.WebControls.GridView.HandleEvent(EventArgs e, Boolean causesValidation, String validationGroup) +1415
+   System.Web.UI.Control.RaiseBubbleEvent(Object source, EventArgs args) +50
+   System.Web.UI.WebControls.GridViewRow.OnBubbleEvent(Object source, EventArgs e) +147
+   System.Web.UI.Control.RaiseBubbleEvent(Object source, EventArgs args) +50
+   System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint) +5445
