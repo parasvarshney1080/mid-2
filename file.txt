@@ -503,3 +503,18 @@ Stack Trace:
    System.Web.UI.WebControls.GridViewRow.OnBubbleEvent(Object source, EventArgs e) +147
    System.Web.UI.Control.RaiseBubbleEvent(Object source, EventArgs args) +50
    System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint) +5445
+
+
+System.ArgumentOutOfRangeException
+  HResult=0x80131502
+  Message=Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index
+  Source=mscorlib
+  StackTrace:
+   at System.Collections.ArrayList.get_Item(Int32 index)
+   at DataTableCRUD.Default.GridView1_RowDeleting(Object sender, GridViewDeleteEventArgs e) in C:\Users\A0851291\source\repos\WebApplication21\WebApplication21\Default.aspx.cs:line 196
+
+  This exception was originally thrown at this call stack:
+    [External Code]
+    DataTableCRUD.Default.GridView1_RowDeleting(object, System.Web.UI.WebControls.GridViewDeleteEventArgs) in Default.aspx.cs
+    [External Code]
