@@ -566,3 +566,10 @@ Parameter name: index]
    System.Web.UI.WebControls.GridViewRow.OnBubbleEvent(Object source, EventArgs e) +147
    System.Web.UI.Control.RaiseBubbleEvent(Object source, EventArgs args) +50
    System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint) +5445
+
+System.Data.DuplicateNameException
+  HResult=0x80131922
+  Message=A column named 'Id' already belongs to this DataTable.
+  Source=<Cannot evaluate the exception source>
+  StackTrace:
+<Cannot evaluate the exception stack trace>
