@@ -1,172 +1,42 @@
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+Default.aspx
 
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Default.aspx.cs" MasterPageFile="~/Site.Master" Inherits="DataTableCRUD.Default" %>
 
-namespace WebApplication21
-{
-    public partial class EmployeeDetails : System.Web.UI.UserControl
-    {
-        private DataTable dataTable;
-        public event EventHandler<EmployeeDetailsEventArgs> bindDataClick;
-        protected void Page_Load(object sender, EventArgs e)
-        {
+<%@ Register Src="EmployeeDetails.ascx" TagPrefix="uc" TagName="EmployeeDetails" %>
 
-        }
-        public void BindGrid()
-        {
-
-        }
-        protected void btnSave_Click(object sender, EventArgs e)
-        {
-            if (Page.IsValid)
-            {
-
-                int id = hdnId.Value == "" ? 0 : Convert.ToInt32(hdnId.Value);
-                string name = txtName.Text;
-                int age = Convert.ToInt32(txtAge.Text);
-                string gender = rblGender.SelectedValue;
-                string profession = txtProfession.Text;
-
-                string languages = "";
-                if (chkHindi.Checked)
-                    languages += "Hindi,";
-                if (chkEnglish.Checked)
-                    languages += "English,";
-                if (chkGujarati.Checked)
-                    languages += "Gujarati,";
-
-                if (!string.IsNullOrEmpty(languages))
-                    languages = languages.TrimEnd(',');
-
-                string country = ddlCountry.SelectedValue;
-
-
-                EmployeeDetailsEventArgs args = new EmployeeDetailsEventArgs(id, name, age, gender, profession, languages, country);
-                //Session["EmployeeeTable"] = dataTable;
-                ClearForm();
-                bindDataClick.Invoke(this, args);
-
-
-
-
-            }
-        }
-        protected void EmployeeDetails1_EditClicked(object sender, EventArgs e)
-        {
-            Button EditButton_Click = (Button)sender;
-            int id = Convert.ToInt32(EditButton_Click.CommandArgument);
-
-            dataTable = (DataTable)Session["EmployeeTable"];
-            DataRow row = dataTable.Rows.Find(id);
-
-            hdnId.Value = row["Id"].ToString();
-            txtName.Text = row["Name"].ToString();
-            txtAge.Text = row["Age"].ToString();
-            rblGender.SelectedValue = row["Gender"].ToString();
-            txtProfession.Text = row["Profession"].ToString();
-
-            string languages = row["Languages"].ToString();
-            chkHindi.Checked = languages.Contains("Hindi");
-            chkEnglish.Checked = languages.Contains("English");
-            chkGujarati.Checked = languages.Contains("Gujarati");
-
-            string country = row["Country"].ToString();
-            ddlCountry.SelectedValue = country;
-
-        }
-
-        protected void EmployeeDetails1_DeleteClicked(object sender, EventArgs e)
-        {
-            Button DeleteButton_Click = (Button)sender;
-            int id = Convert.ToInt32(DeleteButton_Click.CommandArgument);
-
-            dataTable = (DataTable)Session["EmployeeTable"];
-            if (dataTable != null)
-            {
-                for (int i = dataTable.Rows.Count - 1; i >= 0; i--)
-                {
-                    DataRow dr = dataTable.Rows[i];
-                    if (Convert.ToInt32(dr["id"]) == id)
-                        dr.Delete();
-                }
-                dataTable.AcceptChanges();
-            }
-
-            BindGrid();
-
-
-        }
-
-
-        protected virtual void OnSaveClicked(EmployeeDetailsEventArgs e)
-        {
-            SaveClicked?.Invoke(this, e);
-
-        }
-        protected void EditButton_Click(object sender, EventArgs e)
-        {
-
-            EditClicked?.Invoke(this, e);
-        }
-        protected void DeleteButton_Click(object sender, EventArgs e)
-        {
-            DeleteClicked?.Invoke(this, e);
-        }
-
-
-
-        public event EventHandler<EmployeeDetailsEventArgs> SaveClicked;
-
-        public event EventHandler<EmployeeDetailsEventArgs> EditClicked;
-        public event EventHandler<EmployeeDetailsEventArgs> DeleteClicked;
-
-        private void ClearForm()
-        {
-            hdnId.Value = "0";
-            txtName.Text = string.Empty;
-            txtAge.Text = string.Empty;
-            rblGender.ClearSelection();
-            txtProfession.Text = string.Empty;
-            chkHindi.Checked = false;
-            chkEnglish.Checked = false;
-            chkGujarati.Checked = false;
-            ddlCountry.SelectedIndex = 0;
-
-        }
-
-    }
-    public class EmployeeDetailsEventArgs : EventArgs
-    {
-        public int Id { get; private set; }
-        public string Name { get; private set; }
-        public int Age { get; private set; }
-        public string Gender { get; private set; }
-        public string Profession { get; private set; }
-        public string Languages { get; private set; }
-
-        public string Country { get; private set; }
-        public EmployeeDetailsEventArgs(int id, string name, int age, string gender, string profession, string languages, string country)
-        {
-            Id = id;
-            Name = name;
-            Age = age;
-            Gender = gender;
-            Profession = profession;
-            Country = country;
-            Languages = languages;
-
-
-        }
-    }
-}
-
+<asp:Content runat="server" ID="con" ContentPlaceHolderID="ContentPlaceHolder1">
+    <div class="mt-2">
+        <uc:EmployeeDetails ID="EmployeeDetails1" runat="server" />
+    </div>
+    <div class="row mt-2">
+        <div class="col-md-12">
+            <asp:GridView ID="GridView1" CssClass="table table-responsive" runat="server" AutoGenerateColumns="false">
+                <Columns>
+                    <asp:BoundField DataField="Id" HeaderText="ID" />
+                    <asp:BoundField DataField="Name" HeaderText="Name" />
+                    <asp:BoundField DataField="Age" HeaderText="Age" />
+                    <asp:BoundField DataField="Gender" HeaderText="Gender" />
+                    <asp:BoundField DataField="Profession" HeaderText="Profession" />
+                    <asp:BoundField DataField="Languages" HeaderText="Known Languages" />
+                    <asp:BoundField DataField="Country" HeaderText="Country" />
+                    <asp:TemplateField HeaderText="Edit">
+                        <ItemTemplate>
+                            <asp:LinkButton ID="lnkEdit" runat="server" Text="Edit" CommandName="Edit" CommandArgument='<%# Eval("Id") %>' />
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Delete">
+                        <ItemTemplate>
+                            <asp:LinkButton ID="lnkDelete" runat="server" Text="Delete" CommandName="Delete" CommandArgument='<%# Eval("Id") %>' />
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                </Columns>
+            </asp:GridView>
+        </div>
+    </div>
+</asp:Content>
 
 Default.aspx.cs
+
 
 using System;
 using System.Linq;
@@ -188,6 +58,12 @@ namespace DataTableCRUD
                 BindGrid();
             }
             this.EmployeeDetails1.bindDataClick += new EventHandler<EmployeeDetailsEventArgs>(this.EmployeeDetails1_SaveClicked);
+            this.EmployeeDetails1.EditClicked += new EventHandler<EmployeeDetailsEventArgs>(this.EmployeeDetails1_SaveClicked);
+            this.EmployeeDetails1.DeleteClicked += new EventHandler<EmployeeDetailsEventArgs>(this.EmployeeDetails1_SaveClicked);
+            
+
+            // Subscribe to the events in the EmployeeDetails control
+
         }
 
         private void CreateDataTable()
@@ -214,28 +90,70 @@ namespace DataTableCRUD
             GridView1.DataBind();
 
         }
-        
 
-
-        public void btnSave_Click(object sender, EventArgs e)
+        protected void GridView1_RowEditing(object sender, GridViewEditEventArgs e)
         {
+            GridView1.EditIndex = e.NewEditIndex;
+            BindGrid();
+        }
+        protected void GridView1_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+            GridView1.EditIndex = -1;
+            BindGrid();
+        }
+        protected void GridView1_RowUpdating(object sender,GridViewUpdateEventArgs e)
+        {
+            int id = Convert.ToInt32(GridView1.DataKeys[e.RowIndex].Value);
+            GridViewRow row = GridView1.Rows[e.RowIndex];
+            string name = ((TextBox)row.FindControl("txtName")).Text;
+            int age = Convert.ToInt32(((TextBox)row.FindControl("txtAge")).Text);
+            string gender = ((DropDownList)row.FindControl("ddlGender")).SelectedValue;
+            string profession = ((TextBox)row.FindControl("txtProfession")).Text;
+            string language = ((CheckBoxList)row.FindControl("cblLanguage")).Items.Cast<ListItem>().Where(li=>li.Selected).Selected(li=>il.Text).ToList().Join(",");
+            string country = ((DropDownList)row.FindControl("ddlCountry")).SelectedValue;
 
+            dataTable = (DataTable)Session["EmployeeTable"];
+            DataRow dataRow = dataTable.Rows.Find(id);
+            if (dataRow != null)
+            {
+                dataRow["Name"] = name;
+                dataRow["Age"] = age;
+                dataRow["Gender"] = gender;
+                dataRow["Profession"] = profession;
+                dataRow["Language"] = language;
+                dataRow["Country"] = country;
+            }
+            GridView1.EditIndex = -1; // Exit edit mode
+            BindGrid(); // Rebind the GridView
+
+            // Save the changes in the DataTable to the Session
+            Session["EmployeeTable"] = dataTable;
+        }
+        protected void GridView1_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            int id = Convert.ToInt32(GridView1.DataKeys[e.RowIndex].Value);
+
+            dataTable = (DataTable)Session["EmployeeTable"];
+            if (dataTable != null)
+            {
+                for (int i = dataTable.Rows.Count - 1; i >= 0; i--)
+                {
+                    DataRow dr = dataTable.Rows[i];
+                    if (Convert.ToInt32(dr["id"]) == id)
+                        dr.Delete();
+                }
+                dataTable.AcceptChanges();
+            }
+
+            GridView1.EditIndex = -1; // Exit edit mode
+            BindGrid(); // Rebind the GridView
+
+            // Save the changes in the DataTable to the Session
+            Session["EmployeeTable"] = dataTable;
         }
 
 
-        public void EmployeeDetails1_EditClicked(object sender, EventArgs e)
-        {
 
-        }
-
-        public void EmployeeDetails1_DeleteClicked(object sender, EventArgs e)
-        {
-            
-        }
-        protected void btnAddNew_Click(object sender, EventArgs e)
-        {
-
-        }
         protected void EmployeeDetails1_SaveClicked(object sender, EmployeeDetailsEventArgs e)
         {
             int id = e.Id;
@@ -254,7 +172,7 @@ namespace DataTableCRUD
 
             /* if (dataTable != null)
              {*/
-            if (id ==0 || dataTable==null)
+            if (id ==0)
             {
 
                 DataRow newRow = dataTable.NewRow();
@@ -286,26 +204,278 @@ namespace DataTableCRUD
             Session["EmployeeeTable"] = dataTable;
             ClearForm();
             BindGrid();
+        }
+        
 
 
+
+
+        protected void ClearForm()
+        {
+            
+        }
+    }
+}
+
+EmployeeDetails.ascx
+
+
+<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="EmployeeDetails.ascx.cs" Inherits="WebApplication21.EmployeeDetails" %>
+
+
+
+<h2>Add/Edit Employee</h2>
+<hr />
+<asp:HiddenField ID="hdnId" runat="server" />
+<div class="row">
+    <div class="col-5">
+
+        <div class="form-inline">
+            <div class="form-group">
+                <label for="txtName" class="mr-2">Name</label>
+                <asp:TextBox ID="txtName" runat="server" CssClass="form-control"></asp:TextBox>
+                <asp:RequiredFieldValidator ID="rfvName" runat="server" ControlToValidate="txtName" ErrorMessage="Name is required." />
+            </div>
+        </div>
+        <div class="form-inline">
+            <div class="form-group">
+                <label for="txtAge" class="mr-2">Age</label>
+                <asp:TextBox ID="txtAge" runat="server" Type="number" CssClass="form-control"></asp:TextBox>
+                <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtAge" ErrorMessage="Age is required." />
+                <asp:RequiredFieldValidator ID="rfvAge" runat="server" ControlToValidate="txtAge" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="txtProfession">Profession</label>
+            <asp:TextBox ID="txtProfession" runat="server" CssClass="form-control"></asp:TextBox>
+            <asp:RequiredFieldValidator ID="rfvProfession" runat="server" ControlToValidate="txtProfession" ErrorMessage="Profession is required." />
+        </div>
+
+        <div class="form-inline">
+            <div class="form-group">
+                <label for="rblGender">Gender</label>
+                <asp:RadioButtonList ID="rblGender" runat="server" ValidationGroup="EmployeeValidation" RepeatDirection="Horizontal">
+                    <asp:ListItem Text="Male" Value="Male"></asp:ListItem>
+                    <asp:ListItem Text="Female" Value="Female"></asp:ListItem>
+                </asp:RadioButtonList>
+                <asp:RequiredFieldValidator ID="rfvGender" runat="server" ControlToValidate="rblGender" ErrorMessage="Gender is required." />
+            </div>
+        </div>
+
+        <div class="form-inline">
+            <div class="form-group">
+                <label>Known Languages</label>
+                <div class="form-check form-check-inline">
+                    <asp:CheckBox ID="chkHindi" runat="server" Text="Hindi" ValidationGroup="EmployeeValidation" />
+                    <asp:CheckBox ID="chkEnglish" runat="server" Text="English" ValidationGroup="EmployeeValidation" />
+                    <asp:CheckBox ID="chkGujarati" runat="server" Text="Gujarati" ValidationGroup="EmployeeValidation" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Country</label>
+            <asp:DropDownList CssClass="form-select" ID="ddlCountry" runat="server">
+                <asp:ListItem Text="India" Value="India"></asp:ListItem>
+                <asp:ListItem Text="Pakistan" Value="Pakistan"></asp:ListItem>
+                <asp:ListItem Text="China" Value="China"></asp:ListItem>
+                <asp:ListItem Text="Canada" Value="Canada"></asp:ListItem>
+            </asp:DropDownList>
+        </div>
+
+    </div>
+</div>
+<asp:Button ID="btnSave" runat="server" Text="Save" OnClick="btnSave_Click" CssClass="mt-4 btn btn-primary" />
+
+
+EmployeeDetails.ascx.cs
+
+
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+
+namespace WebApplication21
+{
+    public partial class EmployeeDetails : System.Web.UI.UserControl
+    {
+        private DataTable dataTable;
+        public event EventHandler<EmployeeDetailsEventArgs> bindDataClick;
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            dataTable = (DataTable)Session["EmployeeTable"];
+            btnSave.Click += btnSave_Click; // Subscribe to btnSave click event
+            /*btnEdit.Command += btnEdit_Command;
+            btnDelete.Command += btnDelete_Command;*/
+        }
+        public void ClearForm()
+        {
+            hdnId.Value = "0";
+            txtName.Text = string.Empty;
+            txtAge.Text = string.Empty;
+            rblGender.ClearSelection();
+            txtProfession.Text = string.Empty;
+            chkHindi.Checked = false;
+            chkEnglish.Checked = false;
+            chkGujarati.Checked = false;
+            ddlCountry.SelectedIndex = 0;
+        }
+        protected void btnSave_Click(object sender, EventArgs e)
+        {
+            if (Page.IsValid)
+            {
+
+                int id = hdnId.Value == "" ? 0 : Convert.ToInt32(hdnId.Value);
+                string name = txtName.Text;
+                int age;
+                if(!int.TryParse(txtAge.Text, out age)) 
+                {
+                    return;
+                }
+                string gender = rblGender.SelectedValue;
+                string profession = txtProfession.Text;
+
+                string languages = "";
+                if (chkHindi.Checked)
+                    languages += "Hindi,";
+                if (chkEnglish.Checked)
+                    languages += "English,";
+                if (chkGujarati.Checked)
+                    languages += "Gujarati,";
+
+                if (!string.IsNullOrEmpty(languages))
+                    languages = languages.TrimEnd(',');
+
+                string country = ddlCountry.SelectedValue;
+
+
+                EmployeeDetailsEventArgs args = new EmployeeDetailsEventArgs(id, name, age, gender, profession, languages, country);
+                Session["EmployeeeTable"] = dataTable;
+                bindDataClick.Invoke(this, args);
+            }
+        }
+        
+        protected void lnkEdit_Command(object sender, CommandEventArgs e)
+        {
+            int id = Convert.ToInt32(e.CommandArgument);
+            EditClicked?.Invoke(this, new EmployeeDetailsEventArgs(id, null, 0, null, null, null, null));
+        }
+        protected void lnkDelete_Command(object sender, CommandEventArgs e)
+        {
+            int id = Convert.ToInt32(e.CommandArgument);
+            DeleteClicked?.Invoke(this, new EmployeeDetailsEventArgs(id, null, 0, null, null, null, null));
+        }
+        /*protected void EmployeeDetails1_EditClicked(object sender, EventArgs e)
+        {
+            
+            Button EditButton_Click = (Button)sender;
+            int id = Convert.ToInt32(EditButton_Click.CommandArgument);
+
+            dataTable = (DataTable)Session["EmployeeTable"];
+            DataRow row = dataTable.Rows.Find(id);
+
+            hdnId.Value = row["Id"].ToString();
+            txtName.Text = row["Name"].ToString();
+            txtAge.Text = row["Age"].ToString();
+            rblGender.SelectedValue = row["Gender"].ToString();
+            txtProfession.Text = row["Profession"].ToString();
+
+            string languages = row["Languages"].ToString();
+            chkHindi.Checked = languages.Contains("Hindi");
+            chkEnglish.Checked = languages.Contains("English");
+            chkGujarati.Checked = languages.Contains("Gujarati");
+
+            string country = row["Country"].ToString();
+            ddlCountry.SelectedValue = country;
 
         }
+        */
+        /* protected void EmployeeDetails1_DeleteClicked(object sender, EventArgs e)
+         {
+             Button DeleteButton_Click = (Button)sender;
+             int id = Convert.ToInt32(DeleteButton_Click.CommandArgument);
+
+             dataTable = (DataTable)Session["EmployeeTable"];
+             if (dataTable != null)
+             {
+                 for (int i = dataTable.Rows.Count - 1; i >= 0; i--)
+                 {
+                     DataRow dr = dataTable.Rows[i];
+                     if (Convert.ToInt32(dr["id"]) == id)
+                         dr.Delete();
+                 }
+                 dataTable.AcceptChanges();
+             }
+
+             BindGrid();
+        }
+        */
 
 
-
-
-        private void ClearForm()
+        protected virtual void OnSaveClicked(EmployeeDetailsEventArgs e)
         {
+            SaveClicked?.Invoke(this, e);
+
+        }
+       /* protected void btnEdit_Click(object sender, EventArgs e)
+        {
+            EmployeeDetails1_EditClicked(sender, e);
+        }*/
+        
+        /*protected void btnDelete_Click(object sender, EventArgs e)
+        {
+            EmployeeDetails_DeleteClicked(sender, e);
+        }
+        */
+        
+
+        public event EventHandler<EmployeeDetailsEventArgs> SaveClicked;
+
+        public event EventHandler<EmployeeDetailsEventArgs> EditClicked;
+        public event EventHandler<EmployeeDetailsEventArgs> DeleteClicked;
+    }
+    public class EmployeeDetailsEventArgs : EventArgs
+    {
+        public int Id { get; private set; }
+        public string Name { get; private set; }
+        public int Age { get; private set; }
+        public string Gender { get; private set; }
+        public string Profession { get; private set; }
+        public string Languages { get; private set; }
+
+        public string Country { get; private set; }
+        public EmployeeDetailsEventArgs(int id, string name, int age, string gender, string profession, string languages, string country)
+        {
+            Id = id;
+            Name = name;
+            Age = age;
+            Gender = gender;
+            Profession = profession;
+            Country = country;
+            Languages = languages;
+
 
         }
     }
 }
 
-
-Errors
 Severity	Code	Description	Project	File	Line	Suppression State
-Error	CS1503	Argument 2: cannot convert from 'System.EventArgs' to 'WebApplication21.EmployeeDetailsEventArgs'	WebApplication21	C:\Users\A0851291\source\repos\WebApplication21\WebApplication21\EmployeeDetails.ascx.cs	114	Active
-
+Error	CS1061	'IEnumerable<ListItem>' does not contain a definition for 'Selected' and no accessible extension method 'Selected' accepting a first argument of type 'IEnumerable<ListItem>' could be found (are you missing a using directive or an assembly reference?)	WebApplication21	C:\Users\A0851291\source\repos\WebApplication21\WebApplication21\Default.aspx.cs	174	Active
 Severity	Code	Description	Project	File	Line	Suppression State
-Error	CS1503	Argument 2: cannot convert from 'System.EventArgs' to 'WebApplication21.EmployeeDetailsEventArgs'	WebApplication21	C:\Users\A0851291\source\repos\WebApplication21\WebApplication21\EmployeeDetails.ascx.cs	118	Active
+Message	IDE1006	Naming rule violation: These words must begin with upper case characters: bindDataClick	WebApplication21	C:\Users\A0851291\source\repos\WebApplication21\WebApplication21\EmployeeDetails.ascx.cs	15	Active
+Severity	Code	Description	Project	File	Line	Suppression State
+Message	IDE1006	Naming rule violation: These words must begin with upper case characters: bindDataClick	WebApplication21	C:\Users\A0851291\source\repos\WebApplication21\WebApplication21\EmployeeDetails.ascx.cs	15	Active
+Severity	Code	Description	Project	File	Line	Suppression State
+Message	IDE1006	Naming rule violation: These words must begin with upper case characters: btnSave_Click	WebApplication21	C:\Users\A0851291\source\repos\WebApplication21\WebApplication21\EmployeeDetails.ascx.cs	35	Active
+Severity	Code	Description	Project	File	Line	Suppression State
+Message	IDE0018	Variable declaration can be inlined	WebApplication21	C:\Users\A0851291\source\repos\WebApplication21\WebApplication21\EmployeeDetails.ascx.cs	42	Active
+Severity	Code	Description	Project	File	Line	Suppression State
+Message	IDE1006	Naming rule violation: These words must begin with upper case characters: lnkEdit_Command	WebApplication21	C:\Users\A0851291\source\repos\WebApplication21\WebApplication21\EmployeeDetails.ascx.cs	70	Active
+Severity	Code	Description	Project	File	Line	Suppression State
+Message	IDE1006	Naming rule violation: These words must begin with upper case characters: lnkDelete_Command	WebApplication21	C:\Users\A0851291\source\repos\WebApplication21\WebApplication21\EmployeeDetails.ascx.cs	75	Active
 
