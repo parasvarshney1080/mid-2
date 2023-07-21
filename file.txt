@@ -479,3 +479,4 @@ Message	IDE1006	Naming rule violation: These words must begin with upper case ch
 Severity	Code	Description	Project	File	Line	Suppression State
 Message	IDE1006	Naming rule violation: These words must begin with upper case characters: lnkDelete_Command	WebApplication21	C:\Users\A0851291\source\repos\WebApplication21\WebApplication21\EmployeeDetails.ascx.cs	75	Active
 
+string language = string.Join(",", ((CheckBoxList)row.FindControl("cblLanguage")).Items.Cast<ListItem>().Where(li => li.Selected).Select(li => li.Text).ToList());
