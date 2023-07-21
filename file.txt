@@ -514,7 +514,55 @@ Parameter name: index
    at System.Collections.ArrayList.get_Item(Int32 index)
    at DataTableCRUD.Default.GridView1_RowDeleting(Object sender, GridViewDeleteEventArgs e) in C:\Users\A0851291\source\repos\WebApplication21\WebApplication21\Default.aspx.cs:line 196
 
+
+System.ArgumentOutOfRangeException
+  HResult=0x80131502
+  Message=Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index
+  Source=mscorlib
+  StackTrace:
+   at System.Collections.ArrayList.get_Item(Int32 index)
+   at DataTableCRUD.Default.GridView1_RowDeleting(Object sender, GridViewDeleteEventArgs e) in C:\Users\A0851291\source\repos\WebApplication21\WebApplication21\Default.aspx.cs:line 196
+
   This exception was originally thrown at this call stack:
     [External Code]
     DataTableCRUD.Default.GridView1_RowDeleting(object, System.Web.UI.WebControls.GridViewDeleteEventArgs) in Default.aspx.cs
     [External Code]
+
+  This exception was originally thrown at this call stack:
+    [External Code]
+    DataTableCRUD.Default.GridView1_RowDeleting(object, System.Web.UI.WebControls.GridViewDeleteEventArgs) in Default.aspx.cs
+    [External Code]
+
+Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index
+Description: An unhandled exception occurred during the execution of the current web request. Please review the stack trace for more information about the error and where it originated in the code.
+
+Exception Details: System.ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index
+
+Source Error:
+
+
+Line 194:        protected void GridView1_RowDeleting(object sender, GridViewDeleteEventArgs e)
+Line 195:        {
+Line 196:            int id = Convert.ToInt32(GridView1.DataKeys[e.RowIndex].Value);
+Line 197:
+Line 198:            dataTable = (DataTable)Session["EmployeeTable"];
+
+Source File: C:\Users\A0851291\source\repos\WebApplication21\WebApplication21\Default.aspx.cs    Line: 196
+
+Stack Trace:
+
+
+[ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index]
+   System.Collections.ArrayList.get_Item(Int32 index) +14538231
+   System.Web.UI.WebControls.DataKeyArray.get_Item(Int32 index) +18
+   DataTableCRUD.Default.GridView1_RowDeleting(Object sender, GridViewDeleteEventArgs e) in C:\Users\A0851291\source\repos\WebApplication21\WebApplication21\Default.aspx.cs:196
+   System.Web.UI.WebControls.GridView.HandleDelete(GridViewRow row, Int32 rowIndex) +945
+   System.Web.UI.WebControls.GridView.HandleEvent(EventArgs e, Boolean causesValidation, String validationGroup) +1415
+   System.Web.UI.Control.RaiseBubbleEvent(Object source, EventArgs args) +50
+   System.Web.UI.WebControls.GridViewRow.OnBubbleEvent(Object source, EventArgs e) +147
+   System.Web.UI.Control.RaiseBubbleEvent(Object source, EventArgs args) +50
+   System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint) +5445
