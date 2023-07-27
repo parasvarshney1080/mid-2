@@ -573,3 +573,17 @@ System.Data.DuplicateNameException
   Source=<Cannot evaluate the exception source>
   StackTrace:
 <Cannot evaluate the exception stack trace>
+
+Parser Error
+Description: An error occurred during the parsing of a resource required to service this request. Please review the following specific parse error details and modify your source file appropriately.
+
+Parser Error Message: Could not load type 'DataTableCRUD.login'.
+
+Source Error:
+
+
+Line 1:  <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="login.aspx.cs" Inherits="DataTableCRUD.login" %>
+Line 2:  
+Line 3:  <!DOCTYPE html>
+
+Source File: /login.aspx    Line: 1
