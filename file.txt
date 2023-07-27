@@ -589,3 +589,21 @@ Line 3:  <!DOCTYPE html>
 Source File: /login.aspx    Line: 1
 
 C:\Windows\Microsoft.NET\Framework\version\Temporary ASP.NET Files
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Message	IDE1006	Naming rule violation: These words must begin with upper case characters: btnLogout_Click	WebApplication21	C:\Users\A0851291\source\repos\WebApplication21\WebApplication21\Default.aspx.cs	174	Active
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Message	IDE1006	Naming rule violation: These words must begin with upper case characters: btnLogout_Click	WebApplication21	C:\Users\A0851291\source\repos\WebApplication21\WebApplication21\Default.aspx.cs	174	Active
+Severity	Code	Description	Project	File	Line	Suppression State
+Message	IDE1006	Naming rule violation: These words must begin with upper case characters: bindDataClick	WebApplication21	C:\Users\A0851291\source\repos\WebApplication21\WebApplication21\EmployeeDetails.ascx.cs	15	Active
+Severity	Code	Description	Project	File	Line	Suppression State
+Message	IDE1006	Naming rule violation: These words must begin with upper case characters: btnSave_Click	WebApplication21	C:\Users\A0851291\source\repos\WebApplication21\WebApplication21\EmployeeDetails.ascx.cs	34	Active
+Severity	Code	Description	Project	File	Line	Suppression State
+Message	IDE0018	Variable declaration can be inlined	WebApplication21	C:\Users\A0851291\source\repos\WebApplication21\WebApplication21\EmployeeDetails.ascx.cs	41	Active
+Severity	Code	Description	Project	File	Line	Suppression State
+Message	IDE1006	Naming rule violation: These words must begin with upper case characters: login	WebApplication21	C:\Users\A0851291\source\repos\WebApplication21\WebApplication21\login.aspx.cs	10	Active
+Severity	Code	Description	Project	File	Line	Suppression State
+Message	IDE1006	Naming rule violation: These words must begin with upper case characters: btnLogin_Click	WebApplication21	C:\Users\A0851291\source\repos\WebApplication21\WebApplication21\login.aspx.cs	20	Active
+
+
