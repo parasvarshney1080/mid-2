@@ -11,31 +11,34 @@ namespace DataTableCRUD
 {
     public partial class login : System.Web.UI.Page
     {
+        private readonly object lblMessage;
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            IblMessage.Text = "";
+            lblMessage.Text = "";
         }
 
         protected void BtnLogin_Click(object sender, EventArgs e)
         {
             string username = txtUsername.Text.Trim();
-            string password = txtPassword.Text.Trim();
+            string password = txtPassword.Text;
 
             const string validUsername = "paras";
             const string validPassword = "12345678";
-            if (username == validUsername && password == validPassword)
+
+            if (string.Equals(username, validUsername, StringComparison.OrdinalIgnoreCase) && password ==validPassword)
             {
                 Session["username"] = username;
                 Response.Redirect("Deafult.aspx");
             }
             else
             {
-                IblMessage.Text = "Invalid credentials, please try again";
+                lblMessage.Text = "Invalid credentials, please try again";
+               
             }
         }
     }
 }
-
 
 login.aspx
 
@@ -67,12 +70,3 @@ login.aspx
     </form>
 </body>
 </html>
-
-
-System.NullReferenceException
-  HResult=0x80004003
-  Message=Object reference not set to an instance of an object.
-  Source=WebApplication21
-  StackTrace:
-   at DataTableCRUD.login.btnLogin_Click(Object sender, EventArgs e) in C:\Users\A0851291\source\repos\WebApplication21\WebApplication21\login.aspx.cs:line 33
-
