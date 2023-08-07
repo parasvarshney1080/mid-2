@@ -571,3 +571,7 @@ namespace WebApplication21
   </system.codedom>
 </configuration>
 
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS0103	The name 'FormsAuthentication' does not exist in the current context	WebApplication21	C:\Users\A0851291\source\repos\WebApplication21\WebApplication21\login.aspx.cs	30	Active
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS0103	The name 'lblErrorMessage' does not exist in the current context	WebApplication21	C:\Users\A0851291\source\repos\WebApplication21\WebApplication21\login.aspx.cs	34	Active
