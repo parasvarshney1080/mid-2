@@ -1,0 +1,47 @@
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ContactUs.aspx.cs" Inherits="WebApplication21.ContactUs" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Contact Us</title>
+    <!-- Add Bootstrap CSS link -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <form id="formContactUs" runat="server">
+        <div class="container mt-5">
+            <h2>Contact Us</h2>
+            <div class="form-group">
+                <label for="txtName">Name:</label>
+                <input type="text" id="txtName" class="form-control" runat="server" />
+            </div>
+            <div class="form-group">
+                <label for="txtEmail">Email:</label>
+                <input type="email" id="txtEmail" class="form-control" runat="server" />
+            </div>
+            <div class="form-group">
+                <label for="txtPhone">Phone:</label>
+                <input type="tel" id="txtPhone" class="form-control" runat="server" />
+            </div>
+            <div class="form-group">
+                <label for="ddlSubject">Subject:</label>
+                <select id="ddlSubject" class="form-control" runat="server">
+                    <option value="General Inquiry">General Inquiry</option>
+                    <option value="Support">Support</option>
+                    <option value="Feedback">Feedback</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="txtMessage">Message:</label>
+                <textarea id="txtMessage" class="form-control" rows="4" runat="server"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" runat="server" onserverclick="btnSubmit_Click">Submit</button>
+        </div>
+    </form>
+    <!-- Add Bootstrap JS and jQuery scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.9/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
