@@ -98,3 +98,29 @@ Source File: C:\Users\A0851291\source\repos\WebApplication21\WebApplication21\Co
 </configuration>
 
 
+HTTP Error 500.19 - Internal Server Error
+The requested page cannot be accessed because the related configuration data for the page is invalid.
+
+Detailed Error Information:
+Module	   DefaultDocumentModule
+Notification	   ExecuteRequestHandler
+Handler	   StaticFile
+Error Code	   0x800700b7
+Config Error	   Cannot add duplicate collection entry of type 'add' with unique key attribute 'value' set to 'Default.aspx'
+Config File	   \\?\C:\Users\A0851291\source\repos\WebApplication21\WebApplication21\web.config
+Requested URL	   https://localhost:44317/
+Physical Path	   C:\Users\A0851291\source\repos\WebApplication21\WebApplication21
+Logon Method	   Anonymous
+Logon User	   Anonymous
+
+Config Source:
+   16: 			<files>
+   17: 				<add value="Default.aspx" />
+   18: 			</files>
+
+More Information:
+This error occurs when there is a problem reading the configuration file for the Web server or Web application. In some cases, the event logs may contain more information about what caused this error.
+If you see the text "There is a duplicate 'system.web.extensions/scripting/scriptResourceHandler' section defined", this error is because you are running a .NET Framework 3.5-based application in .NET Framework 4. If you are running WebMatrix, to resolve this problem, go to the Settings node to set the .NET Framework version to ".NET 2". You can also remove the extra sections from the web.config file.
+View more information »
+
+
