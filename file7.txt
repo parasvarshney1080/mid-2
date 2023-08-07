@@ -1,0 +1,79 @@
+login.aspx 
+
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="DataTableCRUD.login" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div style="margin:auto">
+            <h2>Login</h2>
+            <asp:Label ID="lblMessage" runat="server" ForeColor="Red"></asp:Label>
+            <div>
+                <label for="txtUsername">Username:</label>
+                <asp:TextBox ID="txtUsername" runat="server"></asp:TextBox>
+            </div>
+            <div>
+                <label for="txtPassword">Password:</label>
+                <asp:TextBox ID="txtPassword" runat="server" TextMode="Password"></asp:TextBox>
+            </div>
+            <div>
+                <asp:Button ID="btnLogin" runat="server" Text="Login" OnClick="btnLogin_Click" />
+            </div>
+        </div>
+    </form>
+</body>
+</html>
+
+login.aspx.cs
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.Security;
+
+namespace DataTableCRUD
+{
+    public partial class login : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if(User.Identity.IsAuthenticated)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+        }
+
+        protected void btnLogin_Click(object sender, EventArgs e)
+        {
+            string username = txtUsername.Text.Trim();
+            string password = txtPassword.Text;
+
+            //const string validUsername = "paras";
+            //const string validPassword = "12345678";
+
+            if(IsValidUser(username, password))
+            {
+                FormsAuthentication.RedirectFromLoginPage(username, false);     
+            }
+            else
+            {
+                lblMessage.Text = "Invalid username or password";
+            }
+        }
+        private bool IsValidUser(string username, string password)
+        {
+            string validUsername = "paras";
+            string validPassword = "12345678";
+            return(username == validUsername && password == validPassword);
+
+        }
+    }
+}
+
