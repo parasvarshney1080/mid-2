@@ -45,3 +45,20 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
+
+
+Compilation Error
+Description: An error occurred during the compilation of a resource required to service this request. Please review the following specific error details and modify your source code appropriately.
+
+Compiler Error Message: CS1061: 'contactus_aspx' does not contain a definition for 'btnSubmit_Click' and no accessible extension method 'btnSubmit_Click' accepting a first argument of type 'contactus_aspx' could be found (are you missing a using directive or an assembly reference?)
+
+Source Error:
+
+
+Line 37:                 <textarea id="txtMessage" class="form-control" rows="4" runat="server"></textarea>
+Line 38:             </div>
+Line 39:             <button type="submit" class="btn btn-primary" runat="server" onserverclick="btnSubmit_Click">Submit</button>
+Line 40:         </div>
+Line 41:     </form>
+
+Source File: C:\Users\A0851291\source\repos\WebApplication21\WebApplication21\ContactUs.aspx    Line: 39
