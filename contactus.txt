@@ -67,17 +67,13 @@ Source File: C:\Users\A0851291\source\repos\WebApplication21\WebApplication21\Co
 
 
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-  For more information on how to configure your ASP.NET application, please visit
-  https://go.microsoft.com/fwlink/?LinkId=169433
-  -->
 <configuration>
   <system.web>
     <compilation debug="true" targetFramework="4.7.2" />
     <httpRuntime targetFramework="4.7.2" />
 
     <!-- Move the authentication element inside system.web -->
-    <authentication mode="forms">
+    <authentication mode="Forms">
       <forms loginUrl="Login.aspx" defaultUrl="Default.aspx" />
     </authentication>
 
@@ -100,4 +96,5 @@ Source File: C:\Users\A0851291\source\repos\WebApplication21\WebApplication21\Co
     </compilers>
   </system.codedom>
 </configuration>
+
 
