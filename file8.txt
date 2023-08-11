@@ -560,3 +560,6 @@ Error	CS0103	The name 'lblLoggedInUser' does not exist in the current context	We
 
 Severity	Code	Description	Project	File	Line	Suppression State
 Error	CS0103	The name 'User' does not exist in the current context	WebApplication21	C:\Users\A0851291\source\repos\WebApplication21\WebApplication21\Header.ascx.cs	19	Active
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS0103	The name 'lblLoggedInUser' does not exist in the current context	WebApplication21	C:\Users\A0851291\source\repos\WebApplication21\WebApplication21\Header.ascx.cs	20	Active
