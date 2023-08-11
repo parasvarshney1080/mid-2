@@ -549,3 +549,14 @@ namespace DataTableCRUD
         }
     }
 }
+
+after updating the both file we get these three error solve these error 
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS0117	'UserControl' does not contain a definition for 'Identity'	WebApplication21	C:\Users\A0851291\source\repos\WebApplication21\WebApplication21\Header.ascx.cs	16	Active
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS0103	The name 'lblLoggedInUser' does not exist in the current context	WebApplication21	C:\Users\A0851291\source\repos\WebApplication21\WebApplication21\Header.ascx.cs	19	Active
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS0103	The name 'User' does not exist in the current context	WebApplication21	C:\Users\A0851291\source\repos\WebApplication21\WebApplication21\Header.ascx.cs	19	Active
