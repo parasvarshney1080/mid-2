@@ -1,0 +1,86 @@
+Product class 
+
+public class Product
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public decimal Price { get; set; }
+}
+
+start up.cs 
+
+
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddSingleton<List<Product>>();
+    services.AddControllers();
+}
+
+
+product controller 
+
+
+[Route("api/products")]
+[ApiController]
+public class ProductsController : ControllerBase
+{
+    private readonly List<Product> _products;
+
+    public ProductsController(List<Product> products)
+    {
+        _products = products;
+    }
+
+    [HttpGet]
+    public IActionResult Get()
+    {
+        return Ok(_products);
+    }
+
+    [HttpGet("{id}")]
+    public IActionResult Get(int id)
+    {
+        var product = _products.FirstOrDefault(p => p.Id == id);
+        if (product == null)
+        {
+            return NotFound();
+        }
+        return Ok(product);
+    }
+
+    [HttpPost]
+    public IActionResult Post([FromBody] Product product)
+    {
+        product.Id = _products.Count + 1; // Generate a unique ID (simulated)
+        _products.Add(product);
+        return CreatedAtAction(nameof(Get), new { id = product.Id }, product);
+    }
+
+    [HttpPut("{id}")]
+    public IActionResult Put(int id, [FromBody] Product product)
+    {
+        var existingProduct = _products.FirstOrDefault(p => p.Id == id);
+        if (existingProduct == null)
+        {
+            return NotFound();
+        }
+        existingProduct.Name = product.Name;
+        existingProduct.Price = product.Price;
+        return NoContent();
+    }
+
+    [HttpDelete("{id}")]
+    public IActionResult Delete(int id)
+    {
+        var product = _products.FirstOrDefault(p => p.Id == id);
+        if (product == null)
+        {
+            return NotFound();
+        }
+        _products.Remove(product);
+        return NoContent();
+    }
+}
+
+
+
