@@ -64,3 +64,37 @@ public class ProductController : ControllerBase
         return NoContent();
     }
 }
+
+
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS0246	The type or namespace name 'Product' could not be found (are you missing a using directive or an assembly reference?)	Web_ApiProject	C:\Users\A0851291\source\repos\Web_ApiProject\Web_ApiProject\Controllers\ProductController.cs	11	Active
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS0246	The type or namespace name 'Product' could not be found (are you missing a using directive or an assembly reference?)	Web_ApiProject	C:\Users\A0851291\source\repos\Web_ApiProject\Web_ApiProject\Controllers\ProductController.cs	36	Active
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS0246	The type or namespace name 'Product' could not be found (are you missing a using directive or an assembly reference?)	Web_ApiProject	C:\Users\A0851291\source\repos\Web_ApiProject\Web_ApiProject\Controllers\ProductController.cs	44	Active
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS0246	The type or namespace name 'Product' could not be found (are you missing a using directive or an assembly reference?)	Web_ApiProject	C:\Users\A0851291\source\repos\Web_ApiProject\Web_ApiProject\Controllers\ProductController.cs	11	Active
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS0246	The type or namespace name 'Product' could not be found (are you missing a using directive or an assembly reference?)	Web_ApiProject	C:\Users\A0851291\source\repos\Web_ApiProject\Web_ApiProject\Controllers\ProductController.cs	13	Active
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS0246	The type or namespace name 'Product' could not be found (are you missing a using directive or an assembly reference?)	Web_ApiProject	C:\Users\A0851291\source\repos\Web_ApiProject\Web_ApiProject\Controllers\ProductController.cs	14	Active
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS0246	The type or namespace name 'Product' could not be found (are you missing a using directive or an assembly reference?)	Web_ApiProject	C:\Users\A0851291\source\repos\Web_ApiProject\Web_ApiProject\Controllers\ProductController.cs	15	Active
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Warning	CS8618	Non-nullable property 'Name' must contain a non-null value when exiting constructor. Consider declaring the property as nullable.	Web_ApiProject	C:\Users\A0851291\source\repos\Web_ApiProject\Web_ApiProject\Models\Product.cs	6	Active
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Message	IDE0044	Make field readonly	Web_ApiProject	C:\Users\A0851291\source\repos\Web_ApiProject\Web_ApiProject\Controllers\ProductController.cs	11	Active
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Message	IDE0090	'new' expression can be simplified	Web_ApiProject	C:\Users\A0851291\source\repos\Web_ApiProject\Web_ApiProject\Controllers\ProductController.cs	11	Active
+
+
