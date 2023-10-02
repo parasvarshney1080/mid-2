@@ -1,0 +1,66 @@
+// Controllers/ProductController.cs
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
+
+[Route("api/[controller]")]
+[ApiController]
+public class ProductController : ControllerBase
+{
+    private static List<Product> _products = new List<Product>
+    {
+        new Product { Id = 1, Name = "Product 1", Price = 10.99M },
+        new Product { Id = 2, Name = "Product 2", Price = 20.99M },
+        new Product { Id = 3, Name = "Product 3", Price = 30.99M }
+    };
+
+    [HttpGet]
+    public IActionResult Get()
+    {
+        return Ok(_products);
+    }
+
+    [HttpGet("{id}")]
+    public IActionResult Get(int id)
+    {
+        var product = _products.FirstOrDefault(p => p.Id == id);
+        if (product == null)
+        {
+            return NotFound();
+        }
+        return Ok(product);
+    }
+
+    [HttpPost]
+    public IActionResult Post([FromBody] Product product)
+    {
+        product.Id = _products.Count + 1;
+        _products.Add(product);
+        return CreatedAtAction(nameof(Get), new { id = product.Id }, product);
+    }
+
+    [HttpPut("{id}")]
+    public IActionResult Put(int id, [FromBody] Product product)
+    {
+        var existingProduct = _products.FirstOrDefault(p => p.Id == id);
+        if (existingProduct == null)
+        {
+            return NotFound();
+        }
+        existingProduct.Name = product.Name;
+        existingProduct.Price = product.Price;
+        return NoContent();
+    }
+
+    [HttpDelete("{id}")]
+    public IActionResult Delete(int id)
+    {
+        var product = _products.FirstOrDefault(p => p.Id == id);
+        if (product == null)
+        {
+            return NotFound();
+        }
+        _products.Remove(product);
+        return NoContent();
+    }
+}
