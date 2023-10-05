@@ -1,14 +1,16 @@
-ProductController.cs
+ProductController.cs 
 
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization; // Add this using statement
 
 namespace Web_ApiProject.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize] // Add this attribute to protect the entire controller
     public class ProductController : ControllerBase
     {
         private static List<Product> _products = new List<Product>
@@ -23,6 +25,7 @@ namespace Web_ApiProject.Controllers
         {
             return Ok(_products);
         }
+
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
@@ -63,8 +66,8 @@ namespace Web_ApiProject.Controllers
             return NoContent();
         }
 
-        [HttpDelete()]
-        public IActionResult Delete([FromQuery] int id)
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
         {
             var product = _products.FirstOrDefault(p => p.Id == id);
             if (product == null)
@@ -90,52 +93,59 @@ namespace Web_ApiProject.Controllers
 }
 
 
-product.cs 
-namespace ParasNewAPI.Model
-{
-    public class Product
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public decimal Price { get; set; }
-    }
-}
+program.cs
 
-
-appsettings.json
-
-{
-  "Logging": {
-    "LogLevel": {
-      "Default": "Information",
-      "Microsoft.AspNetCore": "Warning"
-    }
-  },
-  "AllowedHosts": "*"
-}
-
-program.cs 
-
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+// Add JWT authentication
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = Configuration["Jwt:Issuer"],
+        ValidAudience = Configuration["Jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+    };
+});
+
+// Add Swagger
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Your API", Version = "v1" });
+});
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.isu())
+if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Your API v1"));
 }
 
 app.UseHttpsRedirection();
+
+app.UseRouting();
+
+app.UseAuthentication(); // Add this line before app.UseAuthorization();
 
 app.UseAuthorization();
 
@@ -144,4 +154,19 @@ app.MapControllers();
 app.Run();
 
 
+Appsetting.json
 
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*",
+  "Jwt": {
+    "Key": "your_secret_key",
+    "Issuer": "your_issuer",
+    "Audience": "your_audience"
+  }
+}
