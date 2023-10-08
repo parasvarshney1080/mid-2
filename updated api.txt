@@ -1,10 +1,9 @@
-Productcontroller.cs
-
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNetCore.Authorization; // Add this using statement
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Logging; // Add this using statement
 
 namespace Web_ApiProject.Controllers
 {
@@ -19,6 +18,13 @@ namespace Web_ApiProject.Controllers
             new Product { Id = 2, Name = "Product 2", Price = 20.99M },
             new Product { Id = 3, Name = "Product 3", Price = 30.99M }
         };
+
+        private readonly ILogger<ProductController> _logger; // Add this line
+
+        public ProductController(ILogger<ProductController> logger) // Add this parameter to the constructor
+        {
+            _logger = logger; // Add this line to initialize the logger
+        }
 
         [HttpGet]
         public IActionResult Get()
@@ -91,110 +97,3 @@ namespace Web_ApiProject.Controllers
         public decimal Price { get; set; }
     }
 }
-
-
-product.cs 
-
-namespace ParasNewAPI.Model
-{
-    public class Product
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public decimal Price { get; set; }
-    }
-}
-
-
-appsetting.json 
-
-{
-  "Logging": {
-    "LogLevel": {
-      "Default": "Information",
-      "Microsoft.AspNetCore": "Warning"
-    }
-  },
-  "AllowedHosts": "*",
-  "Jwt": {
-    "Key": "PWz2L44h4LSRaIGCGIbHVHYFRdTn8Fj3",
-    "Issuer": "%JWT_ISSUER%",
-    "Audience": "%JWT_AUDIENCE%"
-  }
-}
-
-
-program.cs 
-
-
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
-using System.Text;
-
-var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-builder.Services.AddControllers();
-
-// Add JWT authentication
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(options =>
-{
-    options.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidateLifetime = true,
-        ValidateIssuerSigningKey = true,
-        ValidIssuer = builder.Configuration["Jwt:Issuer"],
-        ValidAudience = builder.Configuration["Jwt:Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
-    };
-});
-
-// Add Swagger
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Your API", Version = "v1" });
-});
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Your API v1"));
-}
-
-app.UseHttpsRedirection();
-
-app.UseRouting();
-
-app.UseAuthentication(); // Add this line before app.UseAuthorization();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
-
-
-after running the project with swagger ui we are facing these error 
-
-content-length: 0 
- date: Fri,06 Oct 2023 09:42:26 GMT 
- server: Kestrel 
- www-authenticate: Bearer 
-
-	
-Error: response status is 401
-
-
-
