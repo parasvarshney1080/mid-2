@@ -127,3 +127,25 @@ namespace Web_ApiProject.Controllers
         public decimal Price { get; set; }
     }
 }
+
+System.TypeInitializationException
+  HResult=0x80131534
+  Message=The type initializer for 'System.IdentityModel.Tokens.Jwt.JsonExtensions' threw an exception.
+  Source=System.IdentityModel.Tokens.Jwt
+  StackTrace:
+   at System.IdentityModel.Tokens.Jwt.JsonExtensions.get_Serializer()
+   at System.IdentityModel.Tokens.Jwt.JsonExtensions.SerializeToJson(Object value)
+   at System.IdentityModel.Tokens.Jwt.JwtPayload.SerializeToJson()
+   at System.IdentityModel.Tokens.Jwt.JwtPayload.Base64UrlEncode()
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityToken.get_EncodedPayload()
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.WriteToken(SecurityToken token)
+   at Web_ApiProject.Controllers.ProductController.GenerateJwtToken() in C:\Users\A0851291\source\repos\ParasNewAPI\ParasNewAPI\Controllers\ProductController.cs:line 114
+   at Web_ApiProject.Controllers.ProductController.Login() in C:\Users\A0851291\source\repos\ParasNewAPI\ParasNewAPI\Controllers\ProductController.cs:line 97
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.SyncActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeNextActionFilterAsync()
+
+Inner Exception 1:
+TypeLoadException: Could not load type 'Microsoft.IdentityModel.Json.JsonConvert' from assembly 'Microsoft.IdentityModel.Tokens, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35'.
+
