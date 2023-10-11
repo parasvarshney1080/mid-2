@@ -1,0 +1,28 @@
+index.cshtml 
+
+
+@model YourNamespace.Models.Employee
+
+<div>
+    @using (Html.BeginForm("SubmitEmployee", "Employee", FormMethod.Post, new { id = "employeeForm" }))
+    {
+        <div>
+            @Html.LabelFor(model => model.Name)
+            @Html.TextBoxFor(model => model.Name)
+        </div>
+        <div>
+            @Html.LabelFor(model => model.Age)
+            @Html.TextBoxFor(model => model.Age)
+        </div>
+        <div>
+            @Html.LabelFor(model => model.Profession)
+            @Html.TextBoxFor(model => model.Profession)
+        </div>
+        <div>
+            <input type="submit" value="Submit" />
+        </div>
+    }
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="~/Scripts/EmployeeForm.js"></script>
