@@ -3,21 +3,12 @@ Error	CS0118	'Employee' is a namespace but is used like a type	Employee.UI	C:\Us
 
 
 Severity	Code	Description	Project	File	Line	Suppression State
-Error (active)	CS1963	An expression tree may not contain a dynamic operation	Employee.UI	C:\Users\A0851291\source\repos\ParasNewAPI\Employee.UI\Views\Index.cshtml	7	
-
-Severity	Code	Description	Project	File	Line	Suppression State
-Error (active)	CS1963	An expression tree may not contain a dynamic operation	Employee.UI	C:\Users\A0851291\source\repos\ParasNewAPI\Employee.UI\Views\Index.cshtml	8	
+Error (active)	CS0426	The type name 'UI' does not exist in the type 'Employee'	Employee.UI	C:\Users\A0851291\source\repos\ParasNewAPI\Employee.UI\Views\Index.cshtml		
 
 
 Severity	Code	Description	Project	File	Line	Suppression State
-Error (active)	CS1963	An expression tree may not contain a dynamic operation	Employee.UI	C:\Users\A0851291\source\repos\ParasNewAPI\Employee.UI\Views\Index.cshtml	11	
+Error (active)	CS0426	The type name 'UI' does not exist in the type 'Employee'	Employee.UI	C:\Users\A0851291\source\repos\ParasNewAPI\Employee.UI\Views\Index.cshtml		
 
 
 Severity	Code	Description	Project	File	Line	Suppression State
-Error (active)	CS1963	An expression tree may not contain a dynamic operation	Employee.UI	C:\Users\A0851291\source\repos\ParasNewAPI\Employee.UI\Views\Index.cshtml	12	
-
-Severity	Code	Description	Project	File	Line	Suppression State
-Error (active)	CS1963	An expression tree may not contain a dynamic operation	Employee.UI	C:\Users\A0851291\source\repos\ParasNewAPI\Employee.UI\Views\Index.cshtml	15	
-
-Severity	Code	Description	Project	File	Line	Suppression State
-Error (active)	CS1963	An expression tree may not contain a dynamic operation	Employee.UI	C:\Users\A0851291\source\repos\ParasNewAPI\Employee.UI\Views\Index.cshtml	16	
+Error (active)	CS0426	The type name 'UI' does not exist in the type 'Employee'	Employee.UI	C:\Users\A0851291\source\repos\ParasNewAPI\Employee.UI\Views\Index.cshtml	3	
