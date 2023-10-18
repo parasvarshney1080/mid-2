@@ -69,3 +69,33 @@ namespace Employee.UI.Controllers
         }
     }
 }
+
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS0118	'Employee' is a namespace but is used like a type	Employee.UI	C:\Users\A0851291\source\repos\ParasNewAPI\Employee.UI\Controllers\EmployeeController.cs	12	Active
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS0118	'Employee' is a namespace but is used like a type	Employee.UI	C:\Users\A0851291\source\repos\ParasNewAPI\Employee.UI\Controllers\EmployeeController.cs	20	Active
+
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS0118	'Employee' is a namespace but is used like a type	Employee.UI	C:\Users\A0851291\source\repos\ParasNewAPI\Employee.UI\Controllers\EmployeeController.cs	27	Active
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS0118	'Employee' is a namespace but is used like a type	Employee.UI	C:\Users\A0851291\source\repos\ParasNewAPI\Employee.UI\Controllers\EmployeeController.cs	34	Active
+
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS0118	'Employee' is a namespace but is used like a type	Employee.UI	C:\Users\A0851291\source\repos\ParasNewAPI\Employee.UI\Controllers\EmployeeController.cs	43	Active
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS0118	'Employee' is a namespace but is used like a type	Employee.UI	C:\Users\A0851291\source\repos\ParasNewAPI\Employee.UI\Controllers\EmployeeController.cs	12	Active
+
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS0118	'Employee' is a namespace but is used like a type	Employee.UI	C:\Users\A0851291\source\repos\ParasNewAPI\Employee.UI\Controllers\EmployeeController.cs	14	Active
+
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS0118	'Employee' is a namespace but is used like a type	Employee.UI	C:\Users\A0851291\source\repos\ParasNewAPI\Employee.UI\Controllers\EmployeeController.cs	15	Active
+
