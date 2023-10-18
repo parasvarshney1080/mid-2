@@ -1,0 +1,78 @@
+Failed to load resource: the server responded with a status of 404 ()
+
+
+Employeefoem.cs 
+
+
+
+$(document).ready(function () {
+    $("#employeeForm").submit(function (event) {
+        event.preventDefault();
+        submitForm();
+    });
+});
+
+function submitForm() {
+    var formData = {
+        Name: $("txtName").val(),
+        Id: 0,
+        Profession: $("txtProfession").val(),
+        Age: $("txtAge").val()
+
+    }// $('#employeeForm').serialize(); // Serialize the form data
+
+    $.ajax({
+        type: "POST",
+        url: "https://localhost:7290/api/Employee",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        data: formData,
+        success: function (response) {
+            alert(response); // Display the response from the server
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+}
+
+EmployeeController.cs 
+
+using Microsoft.AspNetCore.Mvc;
+
+namespace Employee.UI.Controllers
+{
+   // [Route("api/[controller]")]
+    // [ApiController]
+    public class EmployeeController : Controller
+    {
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult SubmitEmployee(Employee.UI.Models.Employee employee)
+        {
+            // Process the submitted data, e.g., save to a database
+            // For simplicity, we'll just return a message
+            string message = "Employee submitted: Name - " + employee.Name + ", Age - " + employee.Age + ", Profession - " + employee.Profession;
+            return Json(message);
+        }
+    }
+}
+
+
+index.cshtml
+
+namespace Employee.UI.Views
+ 
+   <div>
+       <label>Name</label>
+       <input id="txtName" type="text" />
+       <label>Age</label>
+       <input id="txtAge" type="text" />
+       <label>Profession</label>
+       <input id="txtProfession" type="text" />
+       <button type="button" onclick="submitForm()">Submit1</button>
+</div>
