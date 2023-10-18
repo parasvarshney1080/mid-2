@@ -1,148 +1,71 @@
-index.cshtml
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
-@{
-    ViewData["Title"] = "Employee Form";
-}
+namespace Employee.UI.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class EmployeeController : Controller
+    {
+        private static List<Employee> employees = new List<Employee>
+        {
+            new Employee { Id = 1, Name = "John Doe", Age = 30, Profession = "Developer" },
+            new Employee { Id = 2, Name = "Jane Doe", Age = 25, Profession = "Designer" }
+        };
 
-<div>
-    <label>Name</label>
-    <input id="txtName" type="text" />
-    <label>Age</label>
-    <input id="txtAge" type="text" />
-    <label>Profession</label>
-    <input id="txtProfession" type="text" />
-    <button type="button" onclick="submitForm()">Submit</button>
-</div>
-
-<div id="employeeList">
-    <h2>Employee List</h2>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Age</th>
-                <th>Profession</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Employee list will be dynamically populated here -->
-        </tbody>
-    </table>
-</div>
-
-@section scripts{
-    <script src="~/js/EmployeeForm.js"></script>
-}
-
-
-
-employeeform.js 
-
-$(document).ready(function () {
-    // Load employee list on page load
-    loadEmployeeList();
-
-    // Attach click event to submit button
-    $("#btnSubmit").click(function () {
-        submitForm();
-    });
-});
-
-function loadEmployeeList() {
-    $.ajax({
-        type: "GET",
-        url: "https://localhost:7290/api/Employee", // Assuming this is the API endpoint to get all employees
-        dataType: "json",
-        success: function (employees) {
-            var tbody = $("#employeeList tbody");
-            tbody.empty();
-
-            employees.forEach(function (employee) {
-                var row = "<tr>" +
-                    "<td>" + employee.Name + "</td>" +
-                    "<td>" + employee.Age + "</td>" +
-                    "<td>" + employee.Profession + "</td>" +
-                    "<td>" +
-                        "<button class='btn btn-primary' onclick='editEmployee(" + employee.Id + ")'>Edit</button> " +
-                        "<button class='btn btn-danger' onclick='deleteEmployee(" + employee.Id + ")'>Delete</button>" +
-                    "</td>" +
-                    "</tr>";
-                tbody.append(row);
-            });
-        },
-        error: function (error) {
-            console.log(error);
+        // GET: api/Employee
+        [HttpGet]
+        public IEnumerable<Employee> Get()
+        {
+            return employees;
         }
-    });
-}
 
-function submitForm() {
-    var formData = {
-        Name: $("#txtName").val(),
-        Age: $("#txtAge").val(),
-        Profession: $("#txtProfession").val(),
-        Id: 0 // Set a default value for Id
-    };
-
-    $.ajax({
-        type: "POST",
-        url: "https://localhost:7290/api/Employee",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        data: JSON.stringify(formData),
-        success: function (response) {
-            alert(response);
-            clearForm(); // Clear form after successful submission
-            loadEmployeeList(); // Reload the employee list after successful submission
-        },
-        error: function (error) {
-            console.log(error);
+        // GET: api/Employee/5
+        [HttpGet("{id}", Name = "Get")]
+        public Employee Get(int id)
+        {
+            return employees.FirstOrDefault(e => e.Id == id);
         }
-    });
-}
 
-function editEmployee(id) {
-    // Assuming you have an API endpoint to get employee details by id
-    $.ajax({
-        type: "GET",
-        url: "https://localhost:7290/api/Employee/" + id, // Replace with the correct API endpoint
-        dataType: "json",
-        success: function (employee) {
-            $("#txtName").val(employee.Name);
-            $("#txtAge").val(employee.Age);
-            $("#txtProfession").val(employee.Profession);
-
-            // Change the button text to "Update"
-            $("#btnSubmit").text("Update");
-        },
-        error: function (error) {
-            console.log(error);
+        // POST: api/Employee
+        [HttpPost]
+        public JsonResult Post([FromBody] Employee employee)
+        {
+            // For simplicity, we'll just return a message
+            employees.Add(employee);
+            return Json("Employee added successfully!");
         }
-    });
-}
 
-function deleteEmployee(id) {
-    // Assuming you have an API endpoint to delete an employee by id
-    $.ajax({
-        type: "DELETE",
-        url: "https://localhost:7290/api/Employee/" + id, // Replace with the correct API endpoint
-        success: function (response) {
-            alert(response); // Display success message
-            loadEmployeeList(); // Reload the employee list after successful deletion
-        },
-        error: function (error) {
-            console.log(error);
+        // PUT: api/Employee/5
+        [HttpPut("{id}")]
+        public JsonResult Put(int id, [FromBody] Employee employee)
+        {
+            var existingEmployee = employees.FirstOrDefault(e => e.Id == id);
+            if (existingEmployee != null)
+            {
+                existingEmployee.Name = employee.Name;
+                existingEmployee.Age = employee.Age;
+                existingEmployee.Profession = employee.Profession;
+                return Json("Employee updated successfully!");
+            }
+
+            return Json("Employee not found");
         }
-    });
+
+        // DELETE: api/Employee/5
+        [HttpDelete("{id}")]
+        public JsonResult Delete(int id)
+        {
+            var existingEmployee = employees.FirstOrDefault(e => e.Id == id);
+            if (existingEmployee != null)
+            {
+                employees.Remove(existingEmployee);
+                return Json("Employee deleted successfully!");
+            }
+
+            return Json("Employee not found");
+        }
+    }
 }
-
-function clearForm() {
-    $("#txtName").val('');
-    $("#txtAge").val('');
-    $("#txtProfession").val('');
-
-    // Change the button text back to "Submit"
-    $("#btnSubmit").text("Submit");
-}
-
