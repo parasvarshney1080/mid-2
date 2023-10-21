@@ -294,3 +294,19 @@ Error	CS0103	The name 'JwtBearerDefaults' does not exist in the current context	
 
 
 
+System.ArgumentNullException
+  HResult=0x80004003
+  Message=String reference not set to an instance of a String. (Parameter 's')
+  Source=System.Private.CoreLib
+  StackTrace:
+   at System.Text.Encoding.GetBytes(String s)
+   at Program.<>c__DisplayClass0_0.<<Main>$>b__1(JwtBearerOptions options) in C:\Users\A0851291\source\repos\Product_Api\Product_Api\Program.cs:line 20
+   at Microsoft.Extensions.Options.ConfigureNamedOptions`1.Configure(String name, TOptions options)
+   at Microsoft.Extensions.Options.OptionsFactory`1.Create(String name)
+   at Microsoft.Extensions.Options.OptionsMonitor`1.<>c__DisplayClass10_0.<Get>b__0()
+   at System.Lazy`1.ViaFactory(LazyThreadSafetyMode mode)
+
+
+
+
+
