@@ -248,6 +248,24 @@ app.MapControllers();
 app.Run();
 
 
+Appsetting.json
+
+
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*",
+  "Jwt": {
+    "Key": "PWz2L44h4LSRaIGCGIbHVHYFRdTn8Fj3",
+    "Issuer": "%JWT_ISSUER%",
+    "Audience": "%JWT_AUDIENCE%"
+  }
+}
+
 
 
 
