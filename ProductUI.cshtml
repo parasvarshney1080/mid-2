@@ -1,0 +1,79 @@
+ProductUI.cshtml 
+
+@{
+    ViewBag.Title = "Product View";
+}
+
+<h2>Product List</h2>
+
+<div id="productList">
+    <!-- This section will be populated with product list using jQuery -->
+</div>
+
+<h2>Create Product</h2>
+
+<div id="createProductForm">
+    <div class="form-group">
+        <label for="productName">Name</label>
+        <input type="text" class="form-control" id="productName">
+    </div>
+    <div class="form-group">
+        <label for="productPrice">Price</label>
+        <input type="text" class="form-control" id="productPrice">
+    </div>
+    <button class="btn btn-primary" onclick="createProduct()">Save</button>
+</div>
+
+<script>
+    $(document).ready(function() {
+        // Function to get products and populate the list
+        function getProducts() {
+            $.ajax({
+                url: '/api/Product',
+                method: 'GET',
+                success: function(data) {
+                    $.each(data, function(index, product) {
+                        $('#productList').append(`
+                            <div>
+                                <p>Product ID: ${product.id}</p>
+                                <p>Name: ${product.name}</p>
+                                <p>Price: ${product.price}</p>
+                            </div>
+                        `);
+                    });
+                },
+                error: function(error) {
+                    console.error('Error fetching products:', error);
+                }
+            });
+        }
+
+        // Function to create a product
+        function createProduct() {
+            var productName = $('#productName').val();
+            var productPrice = $('#productPrice').val();
+
+            $.ajax({
+                url: '/api/Product',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    Name: productName,
+                    Price: productPrice
+                }),
+                success: function(data) {
+                    alert('Product created successfully!');
+                    $('#productName').val('');
+                    $('#productPrice').val('');
+                    getProducts(); // Refresh the product list after creating
+                },
+                error: function(error) {
+                    console.error('Error creating product:', error);
+                }
+            });
+        }
+
+        // Initial call to get and populate products
+        getProducts();
+    });
+</script>
