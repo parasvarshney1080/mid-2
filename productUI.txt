@@ -1,8 +1,10 @@
-ProductUI.cshtml 
-
 @{
     ViewBag.Title = "Product View";
 }
+
+<head>
+    <script src="~/js/product.js"></script>
+</head>
 
 <h2>Product List</h2>
 
@@ -23,57 +25,3 @@ ProductUI.cshtml
     </div>
     <button class="btn btn-primary" onclick="createProduct()">Save</button>
 </div>
-
-<script>
-    $(document).ready(function() {
-        // Function to get products and populate the list
-        function getProducts() {
-            $.ajax({
-                url: 'http://localhost:7102/product/productUI',
-                method: 'GET',
-                success: function(data) {
-                    $.each(data, function(index, product) {
-                        $('#productList').append(`
-                            <div>
-                                <p>Product ID: ${product.id}</p>
-                                <p>Name: ${product.name}</p>
-                                <p>Price: ${product.price}</p>
-                            </div>
-                        `);
-                    });
-                },
-                error: function(error) {
-                    console.error('Error fetching products:', error);
-                }
-            });
-        }
-
-        // Function to create a product
-        function createProduct() {
-            var productName = $('#productName').val();
-            var productPrice = $('#productPrice').val();
-
-            $.ajax({
-                url: 'http://localhost:7102/product/productUI',
-                method: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify({
-                    Name: productName,
-                    Price: productPrice
-                }),
-                success: function(data) {
-                    alert('Product created successfully!');
-                    $('#productName').val('');
-                    $('#productPrice').val('');
-                    getProducts(); // Refresh the product list after creating
-                },
-                error: function(error) {
-                    console.error('Error creating product:', error);
-                }
-            });
-        }
-
-        // Initial call to get and populate products
-        getProducts();
-    });
-</script>
