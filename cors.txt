@@ -1,3 +1,19 @@
+Failed to load resource: the server responded with a status of 404 ()
+localhost/:1 Access to XMLHttpRequest at 'https://localhost:7102/api/Product' from origin 'https://localhost:7095' has been blocked by CORS policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+product.js:44 Error creating product: Object
+error @ product.js:44
+c @ jquery.min.js:2
+fireWith @ jquery.min.js:2
+l @ jquery.min.js:2
+(anonymous) @ jquery.min.js:2
+error (async)
+send @ jquery.min.js:2
+ajax @ jquery.min.js:2
+createProduct @ product.js:29
+onclick @ (index):56
+:7102/api/Product:1     Failed to load resource: net::ERR_FAILED
+
+
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -65,13 +81,10 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(builder =>
-   {
-       builder.WithOrigins("http://localhost:7095")
-       .AllowAnyHeader()
-       .AllowAnyMethod();
-
-   });
+    options.AddPolicy("AllowSpecificOrigin",
+    builder => builder.WithOrigins("http://localhost:7095")
+     .AllowAnyHeader()
+     .AllowAnyMethod());
 });
 
 
@@ -92,25 +105,8 @@ app.UseAuthentication(); // Add this line before app.UseAuthorization();
 
 app.UseAuthorization();
 
-app.UseCors("AllowAll");
+app.UseCors("AllowSpecificOrigin");
 
 app.MapControllers();
 
 app.Run();
-
-
-
-Failed to load resource: the server responded with a status of 404 ()
-localhost/:1 Access to XMLHttpRequest at 'https://localhost:7102/api/Product' from origin 'https://localhost:7095' has been blocked by CORS policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource.
-product.js:44 Error creating product: Object
-error @ product.js:44
-c @ jquery.min.js:2
-fireWith @ jquery.min.js:2
-l @ jquery.min.js:2
-(anonymous) @ jquery.min.js:2
-error (async)
-send @ jquery.min.js:2
-ajax @ jquery.min.js:2
-createProduct @ product.js:29
-onclick @ (index):56
-:7102/api/Product:1     Failed to load resource: net::ERR_FAILED
