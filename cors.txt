@@ -46,4 +46,27 @@
         });
     }
 
+
+Failed to load resource: the server responded with a status of 404 ()
+product.js:19 Error fetching products: Object
+error @ product.js:19
+c @ jquery.min.js:2
+fireWith @ jquery.min.js:2
+l @ jquery.min.js:2
+(anonymous) @ jquery.min.js:2
+error (async)
+send @ jquery.min.js:2
+ajax @ jquery.min.js:2
+getProducts @ product.js:4
+success @ product.js:41
+c @ jquery.min.js:2
+fireWith @ jquery.min.js:2
+l @ jquery.min.js:2
+(anonymous) @ jquery.min.js:2
+load (async)
+send @ jquery.min.js:2
+ajax @ jquery.min.js:2
+createProduct @ product.js:29
+onclick @ (index):56
+:7095/product:1     Failed to load resource: net::ERR_EMPTY_RESPONSE
   
