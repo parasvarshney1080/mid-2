@@ -67,7 +67,7 @@ builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(builder =>
    {
-       builder.WithOrigins("*")
+       builder.WithOrigins("http://localhost:7095")
        .AllowAnyHeader()
        .AllowAnyMethod();
 
@@ -97,6 +97,7 @@ app.UseCors("AllowAll");
 app.MapControllers();
 
 app.Run();
+
 
 
 Failed to load resource: the server responded with a status of 404 ()
