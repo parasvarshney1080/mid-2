@@ -56,3 +56,45 @@ $(document).ready(function() {
 
 (index):67 Uncaught ReferenceError: createProduct is not defined
     at HTMLButtonElement.onclick ((index):67:63)
+
+
+
+
+
+@{
+    ViewBag.Title = "Product View";
+}
+
+
+<h2>Product List</h2>
+
+<div id="productList">
+    <table class ="table table-bordered">
+        <thead>
+            <tr>
+               <th>Product ID</th>
+               <th>Name</th>
+               <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- This section will be populated with product list using jQuery -->
+        </tbody>
+    </table>
+</div>
+
+<h2>Create Product</h2>
+
+<div id="createProductForm">
+    <div class="form-group">
+        <label for="productName">Name</label>
+        <input type="text" class="form-control" id="productName">
+    </div>
+    <div class="form-group">
+        <label for="productPrice">Price</label>
+        <input type="text" class="form-control" id="productPrice">
+    </div>
+    <button class="btn btn-primary" onclick="createProduct()">Save</button>
+</div>
+
+
