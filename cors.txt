@@ -52,3 +52,7 @@ $(document).ready(function() {
         });
     }
 });
+
+
+(index):67 Uncaught ReferenceError: createProduct is not defined
+    at HTMLButtonElement.onclick ((index):67:63)
