@@ -1,3 +1,5 @@
+product.js 
+
 $(document).ready(function () {
     // Call getProducts when the page is ready
     getProducts();
@@ -27,6 +29,10 @@ $(document).ready(function () {
         });
     }
 
+    $('#saveButton').click(function () {
+        createProduct();
+    })
+
     // Function to create a product
     function createProduct() {
         var productName = $('#productName').val();
@@ -54,63 +60,135 @@ $(document).ready(function () {
 });
 
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Product View</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="~/javascript/product.js"></script>
-</head>
-<body>
-
-<h2>Product List</h2>
-
-<div id="productList">
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Product ID</th>
-                <th>Name</th>
-                <th>Price</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- This section will be populated with product list using jQuery -->
-        </tbody>
-    </table>
-</div>
-
-<h2>Create Product</h2>
-
-<div id="createProductForm">
-    <div class="form-group">
-        <label for="productName">Name</label>
-        <input type="text" class="form-control" id="productName">
-    </div>
-    <div class="form-group">
-        <label for="productPrice">Price</label>
-        <input type="text" class="form-control" id="productPrice">
-    </div>
-    <button class="btn btn-primary" onclick="createProduct()">Save</button>
-</div>
-
-</body>
-
-</html>
+productController.cs 
 
 
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using System.IdentityModel.Tokens.Jwt;
 
-product.js:54 Error creating product: Object
-error @ product.js:54
-c @ jquery.min.js:2
-fireWith @ jquery.min.js:2
-l @ jquery.min.js:2
-(anonymous) @ jquery.min.js:2
-load (async)
-send @ jquery.min.js:2
-ajax @ jquery.min.js:2
-createProduct @ product.js:39
-(anonymous) @ product.js:31
-dispatch @ jquery.min.js:2
-v.handle @ jquery.min.js:2
-:7102/api/Product:1     Failed to load resource: the server responded with a status of 400 ()
+namespace Web_ApiProject.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    //[Authorize]
+    public class ProductController : ControllerBase
+    {
+        private static List<Product> _products = new List<Product>
+        {
+            new Product { Id = 1, Name = "Product 1", Price = 10.99M },
+            new Product { Id = 2, Name = "Product 2", Price = 20.99M },
+            new Product { Id = 3, Name = "Product 3", Price = 30.99M }
+        };
+
+        private readonly ILogger<ProductController> _logger;
+        private readonly IConfiguration _configuration;
+
+        public ProductController(ILogger<ProductController> logger, IConfiguration configuration)
+        {
+            _logger = logger;
+            _configuration = configuration;
+        }
+
+        [HttpGet]
+        public IActionResult Get()
+        {
+            return Ok(_products);
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
+        {
+            var product = _products.FirstOrDefault(p => p.Id == id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            return Ok(product);
+        }
+
+        [HttpPost]
+        public IActionResult Post([FromBody] Product product)
+        {
+            if (product == null)
+            {
+                return BadRequest("Invalid product data.");
+            }
+            product.Id = GetNextProductId();
+            _products.Add(product);
+            return CreatedAtAction(nameof(Get), new { id = product.Id }, product);
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, [FromBody] Product product)
+        {
+            if (product == null)
+            {
+                return BadRequest("Invalid product data.");
+            }
+            var existingProduct = _products.FirstOrDefault(p => p.Id == id);
+            if (existingProduct == null)
+            {
+                return NotFound();
+            }
+            existingProduct.Name = product.Name;
+            existingProduct.Price = product.Price;
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var product = _products.FirstOrDefault(p => p.Id == id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            _products.Remove(product);
+            return NoContent();
+        }
+
+        [HttpPost("login")] // New action for generating JWT token
+        [AllowAnonymous]
+        public IActionResult Login()
+        {
+            var token = GenerateJwtToken();
+            _logger.LogInformation($"Generated token: {token}");
+            return Ok(new { Token = token });
+        }
+
+        private string GenerateJwtToken()
+        {
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+
+            var token = new JwtSecurityToken(
+                issuer: _configuration["Jwt:Issuer"],
+                audience: _configuration["Jwt:Audience"],
+                expires: DateTime.Now.AddMinutes(30), // Token expiration time
+                signingCredentials: credentials
+            );
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        private int GetNextProductId()
+        {
+            return _products.Max(p => p.Id) + 1;
+        }
+    }
+
+    public class Product
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public decimal Price { get; set; }
+    }
+}
