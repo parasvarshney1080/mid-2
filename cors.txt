@@ -1,17 +1,23 @@
+$(document).ready(function() {
+    // Call getProducts when the page is ready
+    getProducts();
 
     // Function to get products and populate the list
     function getProducts() {
         $.ajax({
-            url: 'http://localhost:7095/product',
+            url: 'https://localhost:7102/api/product',
             method: 'GET',
             success: function (data) {
+                var productList = $('#productList tbody');
+                productList.empty(); // Clear existing data
+
                 $.each(data, function (index, product) {
-                    $('#productList').append(`
-                        <div>
-                            <p>Product ID: ${product.id}</p>
-                            <p>Name: ${product.name}</p>
-                            <p>Price: ${product.price}</p>
-                        </div>
+                    productList.append(`
+                        <tr>
+                            <td>${product.id}</td>
+                            <td>${product.name}</td>
+                            <td>${product.price}</td>
+                        </tr>
                     `);
                 });
             },
@@ -45,28 +51,4 @@
             }
         });
     }
-
-
-Failed to load resource: the server responded with a status of 404 ()
-product.js:19 Error fetching products: Object
-error @ product.js:19
-c @ jquery.min.js:2
-fireWith @ jquery.min.js:2
-l @ jquery.min.js:2
-(anonymous) @ jquery.min.js:2
-error (async)
-send @ jquery.min.js:2
-ajax @ jquery.min.js:2
-getProducts @ product.js:4
-success @ product.js:41
-c @ jquery.min.js:2
-fireWith @ jquery.min.js:2
-l @ jquery.min.js:2
-(anonymous) @ jquery.min.js:2
-load (async)
-send @ jquery.min.js:2
-ajax @ jquery.min.js:2
-createProduct @ product.js:29
-onclick @ (index):56
-:7095/product:1     Failed to load resource: net::ERR_EMPTY_RESPONSE
-  
+});
