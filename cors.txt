@@ -40,3 +40,7 @@
 
 </body>
 </html>
+
+
+(index):72 Uncaught ReferenceError: createProduct is not defined
+    at HTMLButtonElement.onclick ((index):72:63)
