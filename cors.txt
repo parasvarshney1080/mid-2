@@ -143,8 +143,5 @@ namespace Web_ApiProject.Controllers
 
 
 Severity	Code	Description	Project	File	Line	Suppression State
-Error	CS0246	The type or namespace name 'LoginRequest' could not be found (are you missing a using directive or an assembly reference?)	Product_Api	C:\Users\A0851291\source\repos\Product_Api\Product_Api\Controllers\ProductController.cs	95	Active
-
-
-Severity	Code	Description	Project	File	Line	Suppression State
 Error	CS0161	'ProductController.Login(LoginRequest)': not all code paths return a value	Product_Api	C:\Users\A0851291\source\repos\Product_Api\Product_Api\Controllers\ProductController.cs	95	Active
+
