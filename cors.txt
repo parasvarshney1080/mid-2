@@ -1,68 +1,3 @@
-product.js 
-
-$(document).ready(function () {
-    // Call getProducts when the page is ready
-    getProducts();
-
-    // Function to get products and populate the list
-    function getProducts() {
-        $.ajax({
-            url: 'https://localhost:7102/api/product',
-            method: 'GET',
-            success: function (data) {
-                var productList = $('#productList tbody');
-                productList.empty(); // Clear existing data
-
-                $.each(data, function (index, product) {
-                    productList.append(`
-                        <tr>
-                            <td>${product.id}</td>
-                            <td>${product.name}</td>
-                            <td>${product.price}</td>
-                        </tr>
-                    `);
-                });
-            },
-            error: function (error) {
-                console.error('Error fetching products:', error);
-            }
-        });
-    }
-
-    $('#saveButton').click(function () {
-        createProduct();
-    })
-
-    // Function to create a product
-    function createProduct() {
-        var productName = $('#productName').val();
-        var productPrice = $('#productPrice').val();
-
-        $.ajax({
-            url: 'https://localhost:7102/api/Product',
-            method: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify({
-                Name: productName,
-                Price: productPrice
-            }),
-            success: function (data) {
-                alert('Product created successfully!');
-                $('#productName').val('');
-                $('#productPrice').val('');
-                getProducts(); // Refresh the product list after creating
-            },
-            error: function (error) {
-                console.error('Error creating product:', error);
-            }
-        });
-    }
-});
-
-
-productController.cs 
-
-
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -81,7 +16,7 @@ namespace Web_ApiProject.Controllers
     //[Authorize]
     public class ProductController : ControllerBase
     {
-        private static List<Product> _products = new List<Product>
+        private static  List<Product> _products = new List<Product>
         {
             new Product { Id = 1, Name = "Product 1", Price = 10.99M },
             new Product { Id = 2, Name = "Product 2", Price = 20.99M },
@@ -157,11 +92,23 @@ namespace Web_ApiProject.Controllers
 
         [HttpPost("login")] // New action for generating JWT token
         [AllowAnonymous]
-        public IActionResult Login()
+        public IActionResult Login([FromBody] LoginRequest loginRequest)
         {
-            var token = GenerateJwtToken();
-            _logger.LogInformation($"Generated token: {token}");
-            return Ok(new { Token = token });
+            if(AuthenticateUser(loginRequest.Username , loginRequest.Password))
+            {
+                var token = GenerateJwtToken();
+                _logger.LogInformation($"Generated token: {token}");
+                return Ok(new { Token = token });
+            }
+           
+        }
+
+        private bool AuthenticateUser(string username, string password)
+        {
+            const string validUsername = "paras";
+            const string validPassword = "12345678";
+
+            return username == validUsername && password == validPassword;
         }
 
         private string GenerateJwtToken()
@@ -192,3 +139,12 @@ namespace Web_ApiProject.Controllers
         public decimal Price { get; set; }
     }
 }
+
+
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS0246	The type or namespace name 'LoginRequest' could not be found (are you missing a using directive or an assembly reference?)	Product_Api	C:\Users\A0851291\source\repos\Product_Api\Product_Api\Controllers\ProductController.cs	95	Active
+
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS0161	'ProductController.Login(LoginRequest)': not all code paths return a value	Product_Api	C:\Users\A0851291\source\repos\Product_Api\Product_Api\Controllers\ProductController.cs	95	Active
