@@ -389,19 +389,6 @@ Index.cshtml
 
 
 
-Failed to load resource: the server responded with a status of 400 ()
-product.js:54 Error creating product: Object
-error @ product.js:54
-c @ jquery.min.js:2
-fireWith @ jquery.min.js:2
-l @ jquery.min.js:2
-(anonymous) @ jquery.min.js:2
-load (async)
-send @ jquery.min.js:2
-ajax @ jquery.min.js:2
-createProduct @ product.js:39
-(anonymous) @ product.js:31
-dispatch @ jquery.min.js:2
-v.handle @ jquery.min.js:2
-:7102/api/Product:1     Failed to load resource: the server responded with a status of 400 ()
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS0103	The name 'products' does not exist in the current context	Product_Api	C:\Users\A0851291\source\repos\Product_Api\Product_Api\Controllers\ProductController.cs	119	Active
 
