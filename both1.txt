@@ -349,3 +349,34 @@ index.cshtml
 </div>
 
 
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Page</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/javascript/login.js"></script>
+</head>
+<body>
+
+<h2>Login</h2>
+
+<div id="loginForm">
+    <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" class="form-control" id="username">
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password">
+    </div>
+    <button id="loginButton" class="btn btn-primary">Login</button>
+</div>
+
+</body>
+</html>
+
+
