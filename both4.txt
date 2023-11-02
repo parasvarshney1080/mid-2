@@ -1,0 +1,174 @@
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS1056	Unexpected character '$'	Product_UI	C:\Users\A0851291\source\repos\Product_Api\Product_UI\Controllers\HomeController.cs	25	Active
+
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS1026	) expected	Product_UI	C:\Users\A0851291\source\repos\Product_Api\Product_UI\Controllers\HomeController.cs	25	Active
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS1002	; expected	Product_UI	C:\Users\A0851291\source\repos\Product_Api\Product_UI\Controllers\HomeController.cs	25	Active
+
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS1012	Too many characters in character literal	Product_UI	C:\Users\A0851291\source\repos\Product_Api\Product_UI\Controllers\HomeController.cs	26	Active
+
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS1002	; expected	Product_UI	C:\Users\A0851291\source\repos\Product_Api\Product_UI\Controllers\HomeController.cs	26	Active
+
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS1513	} expected	Product_UI	C:\Users\A0851291\source\repos\Product_Api\Product_UI\Controllers\HomeController.cs	26	Active
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS1012	Too many characters in character literal	Product_UI	C:\Users\A0851291\source\repos\Product_Api\Product_UI\Controllers\HomeController.cs	27	Active
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS1002	; expected	Product_UI	C:\Users\A0851291\source\repos\Product_Api\Product_UI\Controllers\HomeController.cs	27	Active
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS1513	} expected	Product_UI	C:\Users\A0851291\source\repos\Product_Api\Product_UI\Controllers\HomeController.cs	27	Active
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS1012	Too many characters in character literal	Product_UI	C:\Users\A0851291\source\repos\Product_Api\Product_UI\Controllers\HomeController.cs	30	Active
+
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS1002	; expected	Product_UI	C:\Users\A0851291\source\repos\Product_Api\Product_UI\Controllers\HomeController.cs	30	Active
+
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS1513	} expected	Product_UI	C:\Users\A0851291\source\repos\Product_Api\Product_UI\Controllers\HomeController.cs	30	Active
+
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS1012	Too many characters in character literal	Product_UI	C:\Users\A0851291\source\repos\Product_Api\Product_UI\Controllers\HomeController.cs	30	Active
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS1002	; expected	Product_UI	C:\Users\A0851291\source\repos\Product_Api\Product_UI\Controllers\HomeController.cs	30	Active
+
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS1513	} expected	Product_UI	C:\Users\A0851291\source\repos\Product_Api\Product_UI\Controllers\HomeController.cs	31	Active
+
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS1002	; expected	Product_UI	C:\Users\A0851291\source\repos\Product_Api\Product_UI\Controllers\HomeController.cs	32	Active
+
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS1513	} expected	Product_UI	C:\Users\A0851291\source\repos\Product_Api\Product_UI\Controllers\HomeController.cs	35	Active
+
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS1002	; expected	Product_UI	C:\Users\A0851291\source\repos\Product_Api\Product_UI\Controllers\HomeController.cs	36	Active
+
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS1012	Too many characters in character literal	Product_UI	C:\Users\A0851291\source\repos\Product_Api\Product_UI\Controllers\HomeController.cs	37	Active
+
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS1513	} expected	Product_UI	C:\Users\A0851291\source\repos\Product_Api\Product_UI\Controllers\HomeController.cs	40	Active
+
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS0103	The name 'ajax' does not exist in the current context	Product_UI	C:\Users\A0851291\source\repos\Product_Api\Product_UI\Controllers\HomeController.cs	25	Active
+
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS0103	The name 'function' does not exist in the current context	Product_UI	C:\Users\A0851291\source\repos\Product_Api\Product_UI\Controllers\HomeController.cs	32	Active
+
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS0103	The name 'data' does not exist in the current context	Product_UI	C:\Users\A0851291\source\repos\Product_Api\Product_UI\Controllers\HomeController.cs	32	Active
+
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS0103	The name 'data' does not exist in the current context	Product_UI	C:\Users\A0851291\source\repos\Product_Api\Product_UI\Controllers\HomeController.cs	34	Active
+
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS0103	The name 'function' does not exist in the current context	Product_UI	C:\Users\A0851291\source\repos\Product_Api\Product_UI\Controllers\HomeController.cs	36	Active
+
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS0103	The name 'error' does not exist in the current context	Product_UI	C:\Users\A0851291\source\repos\Product_Api\Product_UI\Controllers\HomeController.cs	36	Active
+
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS0103	The name 'console' does not exist in the current context	Product_UI	C:\Users\A0851291\source\repos\Product_Api\Product_UI\Controllers\HomeController.cs	37	Active
+
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS0103	The name 'error' does not exist in the current context	Product_UI	C:\Users\A0851291\source\repos\Product_Api\Product_UI\Controllers\HomeController.cs	37	Active
+
+
+using Microsoft.AspNetCore.Mvc;
+using Product_UI.Models;
+using System.Diagnostics;
+
+namespace Product_UI.Controllers
+{
+    public class HomeController : Controller
+    {
+        private readonly ILogger<HomeController> _logger;
+
+        public HomeController(ILogger<HomeController> logger)
+        {
+            _logger = logger;
+        }
+
+        public IActionResult Index()
+        {
+            var jwtToken = Request.Cookies["jwtToken"];
+
+            if (!string.IsNullOrEmpty(jwtToken))
+            {
+        // Token is present, you can use it for authentication
+
+        // Make an AJAX request to fetch data from your API using the token
+        $.ajax({
+                url: 'https://localhost:7102/api/product',
+            method: 'GET',
+            headers:
+                    {
+                        'Authorization': 'Bearer ' + jwtToken // Include the token in the headers
+            },
+            success: function(data) {
+                        // Data is successfully fetched from the API, you can use it in your view
+                        return View(data); // Pass the data to your view for rendering
+                    },
+            error: function(error) {
+                        console.error('Error fetching data from API:', error);
+                        // Handle the error, for example, display a message to the user
+                    }
+                });
+            }
+            else
+            {
+                // Token is not present, handle this case
+                return RedirectToAction("Login", "Home"); // Redirect to login page
+            }
+        }
+
+        public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+    }
+}
+
+
+after adding the code in Homecontroller.cs file we are facing 28 error so please see it i have attached the error and code 
