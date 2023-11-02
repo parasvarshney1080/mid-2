@@ -1,0 +1,497 @@
+product_Api project 
+
+
+ProductController.cs 
+
+
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using System.IdentityModel.Tokens.Jwt;
+
+namespace Web_ApiProject.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    //[Authorize]
+    public class ProductController : ControllerBase
+    {
+        private static  List<Product> _products = new List<Product>
+        {
+            new Product { Id = 1, Name = "Product 1", Price = 10.99M },
+            new Product { Id = 2, Name = "Product 2", Price = 20.99M },
+            new Product { Id = 3, Name = "Product 3", Price = 30.99M }
+        };
+
+        private readonly ILogger<ProductController> _logger;
+        private readonly IConfiguration _configuration;
+
+        public ProductController(ILogger<ProductController> logger, IConfiguration configuration)
+        {
+            _logger = logger;
+            _configuration = configuration;
+        }
+
+        [HttpGet]
+        public IActionResult Get()
+        {
+            return Ok(_products);
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
+        {
+            var product = _products.FirstOrDefault(p => p.Id == id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            return Ok(product);
+        }
+
+        [HttpPost]
+        public IActionResult Post([FromBody] Product product)
+        {
+            if (product == null)
+            {
+                return BadRequest("Invalid product data.");
+            }
+            product.Id = GetNextProductId();
+            _products.Add(product);
+            return CreatedAtAction(nameof(Get), new { id = product.Id }, product);
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, [FromBody] Product product)
+        {
+            if (product == null)
+            {
+                return BadRequest("Invalid product data.");
+            }
+            var existingProduct = _products.FirstOrDefault(p => p.Id == id);
+            if (existingProduct == null)
+            {
+                return NotFound();
+            }
+            existingProduct.Name = product.Name;
+            existingProduct.Price = product.Price;
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var product = _products.FirstOrDefault(p => p.Id == id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            _products.Remove(product);
+            return NoContent();
+        }
+
+        [HttpPost("login")] // New action for generating JWT token
+        [AllowAnonymous]
+        public IActionResult Login([FromBody] LoginRequest loginRequest)
+        {
+            if(AuthenticateUser(loginRequest.Username , loginRequest.Password))
+            {
+                var token = GenerateJwtToken();
+                _logger.LogInformation($"Generated token: {token}");
+                return Ok(new { Token = token });
+            }
+
+            return Unauthorized();
+           
+        }
+
+        private bool AuthenticateUser(string username, string password)
+        {
+            const string validUsername = "paras";
+            const string validPassword = "12345678";
+
+            return username == validUsername && password == validPassword;
+        }
+
+        private string GenerateJwtToken()
+        {
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+
+            var token = new JwtSecurityToken(
+                issuer: _configuration["Jwt:Issuer"],
+                audience: _configuration["Jwt:Audience"],
+                expires: DateTime.Now.AddMinutes(30), // Token expiration time
+                signingCredentials: credentials
+            );
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        private int GetNextProductId()
+        {
+            return _products.Max(p => p.Id) + 1;
+        }
+    }
+
+    public class Product
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public decimal Price { get; set; }
+    }
+
+    public class LoginRequest
+    {
+        public string Username { get; set; }
+        public String Password { get; set; }
+    }
+}
+
+
+Program.cs 
+
+
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using System.Text;
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+builder.Services.AddControllers();
+
+builder.Services.AddRazorPages();
+
+// Add JWT authentication
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+    };
+});
+
+// Add Swagger
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "Jwt_Token_Auth_Api",
+        Version = "v1"
+    });
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Here Enter JWT Token with bearer format like bearer[space] token"
+
+    });
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[]{ }
+        }
+    });
+});
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin",
+    builder => builder.AllowAnyOrigin()
+     .AllowAnyHeader()
+     .AllowAnyMethod());
+});
+
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Your API v1"));
+}
+
+app.UseHttpsRedirection();
+
+app.UseStaticFiles();
+
+app.UseRouting();
+
+app.UseAuthentication(); // Add this line before app.UseAuthorization();
+
+app.UseAuthorization();
+
+app.UseCors("AllowSpecificOrigin");
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+
+    endpoints.MapRazorPages();
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}");
+    endpoints.MapFallbackToFile("/Views/Home/login.html");
+});
+
+app.Run();
+
+
+
+Product_UI project 
+
+
+login.js 
+
+
+
+
+function Adminlogin() {
+    var username = $('#username').val();
+    var password = $('#password').val();
+
+
+    $.ajax({
+        url: 'https://localhost:7102/api/product/login',
+        method: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({
+            Username: username,
+            Password: password
+        }),
+        success: function (data) {
+            alert('Login successful!');
+            window.location.href = '/Home/Index';
+        },
+        error: function (error) {
+            console.error('Error logging in:', error);
+            alert('Invalid credentials. please try again');
+
+        }
+    })
+
+}
+
+
+product.js 
+
+
+$(document).ready(function () {
+    // Call getProducts when the page is ready
+    getProducts();
+
+    // Function to get products and populate the list
+   
+
+    $('#saveButton').click(function () {
+        createProduct();
+    })
+
+    // Function to create a product
+   
+});
+
+function getProducts() {
+    $.ajax({
+        url: 'https://localhost:7102/api/product',
+        method: 'GET',
+        success: function (data) {
+            var productList = $('#productList tbody');
+            productList.empty(); // Clear existing data
+
+            $.each(data, function (index, product) {
+                productList.append(`
+                        <tr>
+                            <td>${product.id}</td>
+                            <td>${product.name}</td>
+                            <td>${product.price}</td>
+                        </tr>
+                    `);
+            });
+        },
+        error: function (error) {
+            console.error('Error fetching products:', error);
+        }
+    });
+}
+function createProduct() {
+    var productName = $('#productName').val();
+    var productPrice = $('#productPrice').val();
+
+    console.log('productName: ', productName);
+    console.log('producPrice: ', productPrice);
+
+
+
+    $.ajax({
+        url: 'https://localhost:7102/api/Product',
+        method: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({
+            Name: productName,
+            Price: productPrice
+        }),
+        success: function (data) {
+            alert('Product created successfully!');
+            $('#productName').val('');
+            $('#productPrice').val('');
+            getProducts(); // Refresh the product list after creating
+        },
+        error: function (error) {
+            console.error('Error creating product:', error);
+        }
+    });
+}
+
+
+HomeController.cs 
+
+
+using Microsoft.AspNetCore.Mvc;
+using Product_UI.Models;
+using System.Diagnostics;
+
+namespace Product_UI.Controllers
+{
+    public class HomeController : Controller
+    {
+        private readonly ILogger<HomeController> _logger;
+
+        public HomeController(ILogger<HomeController> logger)
+        {
+            _logger = logger;
+        }
+
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+    }
+}
+
+Index.cshtml
+
+
+
+
+
+<h2>Product List</h2>
+
+<div id="productList">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Product ID</th>
+                <th>Name</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- This section will be populated with product list using jQuery -->
+        </tbody>
+    </table>
+</div>
+
+<h2>Create Product</h2>
+
+<div id="createProductForm">
+    <div class="form-group">
+        <label for="productName">Name</label>
+        <input type="text" class="form-control" id="productName">
+    </div>
+    <div class="form-group">
+        <label for="productPrice">Price</label>
+        <input type="text" class="form-control" id="productPrice">
+    </div>
+    <button id ="saveButton" class="btn btn-primary">Save</button>
+</div>
+
+
+login.cshtml
+
+
+
+
+
+
+<h2>Product List</h2>
+
+<div id="productList">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Product ID</th>
+                <th>Name</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- This section will be populated with product list using jQuery -->
+        </tbody>
+    </table>
+</div>
+
+<h2>Create Product</h2>
+
+<div id="createProductForm">
+    <div class="form-group">
+        <label for="productName">Name</label>
+        <input type="text" class="form-control" id="productName">
+    </div>
+    <div class="form-group">
+        <label for="productPrice">Price</label>
+        <input type="text" class="form-control" id="productPrice">
+    </div>
+    <button id ="saveButton" class="btn btn-primary">Save</button>
+</div>
+
+
+
