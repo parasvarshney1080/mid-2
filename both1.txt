@@ -1,25 +1,37 @@
-function Adminlogin() {
-    var username = $('#username').val();
-    var password = $('#password').val();
+using Microsoft.AspNetCore.Mvc;
+using Product_UI.Models;
+using System.Diagnostics;
 
-    $.ajax({
-        url: 'https://localhost:7102/api/product/login',
-        method: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify({
-            Username: username,
-            Password: password
-        }),
-        success: function (data) {
-            // Set the cookie
-            document.cookie = `jwtToken=${data.Token}; path=/`;
+namespace Product_UI.Controllers
+{
+    public class HomeController : Controller
+    {
+        private readonly ILogger<HomeController> _logger;
 
-            alert('Login successful!');
-            window.location.href = '/Home/Index';
-        },
-        error: function (error) {
-            console.error('Error logging in:', error);
-            alert('Invalid credentials. please try again');
+        public HomeController(ILogger<HomeController> logger)
+        {
+            _logger = logger;
         }
-    })
+
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+    }
 }
