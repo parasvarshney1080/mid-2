@@ -495,3 +495,21 @@ login.cshtml
 
 
 
+Access to XMLHttpRequest at 'https://localhost:7102/api/Product' from origin 'https://localhost:7095' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+
+
+rror creating product: Object
+error @ product.js:63
+c @ jquery.min.js:2
+fireWith @ jquery.min.js:2
+l @ jquery.min.js:2
+(anonymous) @ jquery.min.js:2
+error (async)
+send @ jquery.min.js:2
+ajax @ jquery.min.js:2
+createProduct @ product.js:48
+(anonymous) @ product.js:9
+dispatch @ jquery.min.js:2
+v.handle @ jquery.min.js:2
+:7102/api/Product:1     Failed to load resource: net::ERR_FAILED
+
