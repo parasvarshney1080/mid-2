@@ -10,6 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllers();
 
+builder.Services.AddRazorPages();
+
 // Add JWT authentication
 builder.Services.AddAuthentication(options =>
 {
@@ -96,10 +98,12 @@ app.UseCors("AllowSpecificOrigin");
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
+
+    endpoints.MapRazorPages();
     endpoints.MapControllerRoute(
         name: "default",
         pattern: "{controller=Home}/{action=Index}/{id?}");
-    endpoints.MapFallbackToFile("Views/Home/login.html");
+    endpoints.MapFallbackToFile("/Views/Home/login.html");
 });
 
 app.Run();
