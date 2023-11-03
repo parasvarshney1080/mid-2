@@ -185,7 +185,7 @@ namespace Product_UI.Controllers
                 return RedirectToAction("Login", "Home");
             }
 
-            
+            ViewBag.Products = product;
             return View();
 
         }
@@ -384,4 +384,8 @@ Error (active)	CS0103	The name 'product' does not exist in the current context	P
 
 Severity	Code	Description	Project	File	Line	Suppression State
 Error (active)	CS0103	The name 'product' does not exist in the current context	Product_UI	c:\Users\A0851291\source\repos\Product_Api\Product_UI\Views\Home\Index.cshtml	23	
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS0103	The name 'product' does not exist in the current context	Product_UI	C:\Users\A0851291\source\repos\Product_Api\Product_UI\Controllers\HomeController.cs	25	Active
+
 
