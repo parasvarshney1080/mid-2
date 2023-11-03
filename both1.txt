@@ -584,3 +584,57 @@ Severity	Code	Description	Project	File	Line	Suppression State
 Error	CS0103	The name 'GetProductsFromApi' does not exist in the current context	Product_UI	C:\Users\A0851291\source\repos\Product_Api\Product_UI\Controllers\HomeController.cs	25	Active
 
 
+
+
+@{
+    var jwtToken = Request.Cookies["user"];
+    var isLoggedIn = !string.IsNullOrEmpty(jwtToken);
+}
+
+@if(isLoggedIn)
+{
+    <h2>Product List</h2>
+
+    <div id="productList">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Product ID</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var product in ViewBag.Products)
+                {
+                    <tr>
+                        <td>@product.Id</td>
+                        <td>@product.Name</td>
+                        <td>@product.Price</td>
+                        <td>
+                            <button class="btn btn-danger" onclick="deleteProduct(@product.Id)">Delete</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <h2>Create Product</h2>
+
+    <div id="createProductForm">
+        <div class="form-group">
+            <label for="productName">Name</label>
+            <input type="text" class="form-control" id="productName">
+        </div>
+        <div class="form-group">
+            <label for="productPrice">Price</label>
+            <input type="text" class="form-control" id="productPrice">
+        </div>
+        <button id ="saveButton" class="btn btn-primary">Save</button>
+    </div>
+}
+
+
+
