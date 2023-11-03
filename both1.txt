@@ -550,3 +550,26 @@ login.cshtml
 
 
 
+
+
+
+function deleteProduct(id) {
+    var jwtToken = readCookie('user');
+
+    $.ajax({
+        url: `https://localhost:7102/api/product/${id}`,
+        method: 'DELETE',
+        headers: {
+            'Authorization': 'Bearer ' + jwtToken
+        },
+        success: function () {
+            alert('Product deleted successfully!');
+            getProducts(); // Refresh the product list after deletion
+        },
+        error: function (error) {
+            console.error('Error deleting product:', error);
+        }
+    });
+}
+
+
