@@ -362,16 +362,25 @@ namespace Web_ApiProject.Controllers
 
 
 Severity	Code	Description	Project	File	Line	Suppression State
-Error (active)	CS0103	The name 'product' does not exist in the current context	Product_UI	c:\Users\A0851291\source\repos\Product_Api\Product_UI\Views\Home\Index.cshtml	19	
+Error (active)	CS0103	The name 'Product' does not exist in the current context	Product_UI	c:\Users\A0851291\source\repos\Product_Api\Product_UI\Views\Home\Index.cshtml	9	
 
+Severity	Code	Description	Project	File	Line	Suppression State
+Error (active)	CS0103	The name 'Name' does not exist in the current context	Product_UI	c:\Users\A0851291\source\repos\Product_Api\Product_UI\Views\Home\Index.cshtml	10	
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error (active)	CS0103	The name 'Price' does not exist in the current context	Product_UI	c:\Users\A0851291\source\repos\Product_Api\Product_UI\Views\Home\Index.cshtml	11	
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error (active)	CS0103	The name 'Actions' does not exist in the current context	Product_UI	c:\Users\A0851291\source\repos\Product_Api\Product_UI\Views\Home\Index.cshtml	12	
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error (active)	CS0103	The name 'product' does not exist in the current context	Product_UI	c:\Users\A0851291\source\repos\Product_Api\Product_UI\Views\Home\Index.cshtml	19	
 
 Severity	Code	Description	Project	File	Line	Suppression State
 Error (active)	CS0103	The name 'product' does not exist in the current context	Product_UI	c:\Users\A0851291\source\repos\Product_Api\Product_UI\Views\Home\Index.cshtml	20	
 
-
 Severity	Code	Description	Project	File	Line	Suppression State
 Error (active)	CS0103	The name 'product' does not exist in the current context	Product_UI	c:\Users\A0851291\source\repos\Product_Api\Product_UI\Views\Home\Index.cshtml	21	
-
 
 Severity	Code	Description	Project	File	Line	Suppression State
 Error (active)	CS0103	The name 'product' does not exist in the current context	Product_UI	c:\Users\A0851291\source\repos\Product_Api\Product_UI\Views\Home\Index.cshtml	23	
