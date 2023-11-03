@@ -638,3 +638,10 @@ Error	CS0103	The name 'GetProductsFromApi' does not exist in the current context
 
 
 
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error (active)	CS0103	The name 'Request' does not exist in the current context	Product_UI	c:\Users\A0851291\source\repos\Product_Api\Product_UI\Views\Home\Index.cshtml	2	
+
+
+
+
