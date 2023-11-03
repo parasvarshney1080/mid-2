@@ -572,4 +572,10 @@ function deleteProduct(id) {
     });
 }
 
+System.NullReferenceException
+  HResult=0x80004003
+  Message=Object reference not set to an instance of an object.
+  Source=Product_UI
+  StackTrace:
+   at AspNetCoreGeneratedDocument.Views_Home_Index.<ExecuteAsync>d__0.MoveNext() in C:\Users\A0851291\source\repos\Product_Api\Product_UI\Views\Home\Index.cshtml:line 18
 
