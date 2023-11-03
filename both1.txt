@@ -1,7 +1,220 @@
-Product_Api project 
+index.cshtml 
 
-productController.cs 
+@{
+    var isLoggedIn = ViewBag.Product != null && ViewBag.Product.Any();
+}
 
+@if(isLoggedIn)
+{
+    <h2>Product List</h2>
+
+    <div id="productList">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Product ID</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var product in ViewBag.Products)
+                {
+                    <tr>
+                        <td>@product.Id</td>
+                        <td>@product.Name</td>
+                        <td>@product.Price</td>
+                        <td>
+                            <button class="btn btn-danger" onclick="deleteProduct(@product.Id)">Delete</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <h2>Create Product</h2>
+
+    <div id="createProductForm">
+        <div class="form-group">
+            <label for="productName">Name</label>
+            <input type="text" class="form-control" id="productName">
+        </div>
+        <div class="form-group">
+            <label for="productPrice">Price</label>
+            <input type="text" class="form-control" id="productPrice">
+        </div>
+        <button id ="saveButton" class="btn btn-primary">Save</button>
+    </div>
+}
+
+product.js 
+
+$(document).ready(function ()
+{
+    // Call getProducts when the page is ready
+    getProducts();
+
+    // Function to get products and populate the list
+   
+
+    $('#saveButton').click(function () {
+        createProduct();
+    })
+
+    // Function to create a product
+   
+});
+
+function getProducts()
+{
+
+    var jwtToken = readCookie('user');
+
+    
+    $.ajax({
+        url: 'https://localhost:7102/api/product',
+        method: 'GET',
+        headers: {
+            'Authorization': 'bearer ' + jwtToken
+        },
+        success: function (data) {
+            var productList = $('#productList tbody');
+            productList.empty(); // Clear existing data
+
+            $.each(data, function (index, product) {
+                productList.append(`
+                        <tr>
+                            <td>${product.id}</td>
+                            <td>${product.name}</td>
+                            <td>${product.price}</td>
+                        </tr>
+                    `);
+            });
+        },
+        error: function (error) {
+            console.error('Error fetching products:', error);
+        }
+    });
+}
+function createProduct()
+{
+    var productName = $('#productName').val();
+    var productPrice = $('#productPrice').val();
+
+    console.log('productName: ', productName);
+    console.log('producPrice: ', productPrice);
+
+    var jwtToken = readCookie('user');
+
+    $.ajax({
+        url: 'https://localhost:7102/api/Product',
+        method: 'POST',
+        headers: {
+            'Authorization': 'Bearer ' + jwtToken
+        },
+        contentType: 'application/json',
+        data: JSON.stringify({
+            Name: productName,
+            Price: productPrice
+        }),
+        success: function (data) {
+            alert('Product created successfully!');
+            $('#productName').val('');
+            $('#productPrice').val('');
+            getProducts(); // Refresh the product list after creating
+        },
+        error: function (error) {
+            console.error('Error creating product:', error);
+        }
+    });
+}
+
+function deleteProduct(productId) {
+    var jwtToken = readCookie('user');
+
+    $.ajax({
+        url: `https://localhost:7102/api/product/${productId}`,
+        method: 'DELETE',
+        headers: {
+            'Authorization': 'Bearer ' + jwtToken
+        },
+        success: function () {
+            alert('Product deleted successfully!');
+            getProducts(); // Refresh the product list after deletion
+        },
+        error: function (error) {
+            console.error('Error deleting product:', error);
+        }
+    });
+}
+
+
+function readCookie(name) {
+    var nameEQ = encodeURIComponent(name) + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) === ' ')
+            c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) === 0)
+            return decodeURIComponent(c.substring(nameEQ.length, c.length));
+    }
+    return null;
+}
+
+
+HomeController.cs 
+
+using Microsoft.AspNetCore.Mvc;
+using Product_UI.Models;
+using System.Diagnostics;
+
+namespace Product_UI.Controllers
+{
+    public class HomeController : Controller
+    {
+        private readonly ILogger<HomeController> _logger;
+
+        public HomeController(ILogger<HomeController> logger)
+        {
+            _logger = logger;
+        }
+
+        public IActionResult Index()
+        {
+            var jwtToken = Request.Cookies["user"];
+            if(string.IsNullOrEmpty(jwtToken))
+            
+            {
+                return RedirectToAction("Login", "Home");
+            }
+
+            
+            return View();
+
+        }
+
+        public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+    }
+}
+
+ProductController.cs 
 
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -152,499 +365,3 @@ namespace Web_ApiProject.Controllers
         public String Password { get; set; }
     }
 }
-
-
-Program.cs 
-
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
-using System.Text;
-
-var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-
-builder.Services.AddCors();
-builder.Services.AddControllers();
-
-builder.Services.AddRazorPages();
-
-// Add JWT authentication
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(options =>
-{
-    options.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidateLifetime = true,
-        ValidateIssuerSigningKey = true,
-        ValidIssuer = builder.Configuration["Jwt:Issuer"],
-        ValidAudience = builder.Configuration["Jwt:Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
-    };
-});
-
-// Add Swagger
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new OpenApiInfo
-    {
-        Title = "Jwt_Token_Auth_Api",
-        Version = "v1"
-    });
-    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-    {
-        Name = "Authorization",
-        Type = SecuritySchemeType.ApiKey,
-        Scheme = "Bearer",
-        BearerFormat = "JWT",
-        In = ParameterLocation.Header,
-        Description = "Here Enter JWT Token with bearer format like bearer[space] token"
-
-    });
-    c.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
-                {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer"
-                }
-            },
-            new string[]{ }
-        }
-    });
-});
-
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowSpecificOrigin",
-    builder => builder.AllowAnyOrigin()
-     .AllowAnyHeader()
-     .AllowAnyMethod());
-});
-
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Your API v1"));
-}
-
-app.UseHttpsRedirection();
-
-app.UseStaticFiles();
-
-app.UseRouting();
-
-app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-
-app.UseAuthentication(); // Add this line before app.UseAuthorization();
-
-app.UseAuthorization();
-
-app.UseCors("AllowSpecificOrigin");
-
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllers();
-
-    endpoints.MapRazorPages();
-    endpoints.MapControllerRoute(
-        name: "default",
-        pattern: "{controller=Home}/{action=Index}/{id?}");
-    endpoints.MapFallbackToFile("/Views/Home/login.html");
-});
-
-app.Run();
-
-
-Product_UI project code 
-
-login.js 
-
-
-
-
-function Adminlogin() {
-    var username = $('#username').val();
-    var password = $('#password').val();
-
-
-    $.ajax({
-        url: 'https://localhost:7102/api/product/login',
-        method: 'POST',
-
-
-        contentType: 'application/json',
-        data: JSON.stringify({
-            Username: username,
-            Password: password
-        }),
-        success: function (data) {
-            if (data.token) {
-
-                document.cookie = 'jwtToken=${data.token}; path=/';
-
-                // document.cookie = data.token
-                createCookie("user", data.token, 1)
-
-
-
-                //alert('Login successful!');
-                window.location.href = '/Home/Index';
-            }
-            else {
-                alert('Invalid credentials. please try again');
-            }
-        },
-        error: function (error) {
-            console.error('Error logging in:', error);
-            alert('Invalid credentials. please try again');
-
-        }
-    });
-
-}
-function createCookie(name, value, days) {
-    var expires;
-
-    if (days) {
-        var date = new Date();
-        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-        expires = "; expires=" + date.toGMTString();
-    } else {
-        expires = "";
-    }
-    document.cookie = encodeURIComponent(name) + "=" + encodeURIComponent(value) + expires + "; path=/";
-}
-
-function readCookie(name) {
-    var nameEQ = encodeURIComponent(name) + "=";
-    var ca = document.cookie.split(';');
-    for (var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) === ' ')
-            c = c.substring(1, c.length);
-        if (c.indexOf(nameEQ) === 0)
-            return decodeURIComponent(c.substring(nameEQ.length, c.length));
-    }
-    return null;
-}
-
-function eraseCookie(name) {
-    createCookie(name, "", -1);
-}
-
-
-product.js 
-
-$(document).ready(function () {
-    // Call getProducts when the page is ready
-    getProducts();
-
-    // Function to get products and populate the list
-   
-
-    $('#saveButton').click(function () {
-        createProduct();
-    })
-
-    // Function to create a product
-   
-});
-
-function getProducts() {
-
-    var jwtToken = readCookie('user');
-
-    
-    $.ajax({
-        url: 'https://localhost:7102/api/product',
-        method: 'GET',
-        headers: {
-            'Authorization': 'bearer ' + jwtToken
-        },
-        success: function (data) {
-            var productList = $('#productList tbody');
-            productList.empty(); // Clear existing data
-
-            $.each(data, function (index, product) {
-                productList.append(`
-                        <tr>
-                            <td>${product.id}</td>
-                            <td>${product.name}</td>
-                            <td>${product.price}</td>
-                        </tr>
-                    `);
-            });
-        },
-        error: function (error) {
-            console.error('Error fetching products:', error);
-        }
-    });
-}
-function createProduct() {
-    var productName = $('#productName').val();
-    var productPrice = $('#productPrice').val();
-
-    console.log('productName: ', productName);
-    console.log('producPrice: ', productPrice);
-
-    var jwtToken = readCookie('user');
-
-    $.ajax({
-        url: 'https://localhost:7102/api/Product',
-        method: 'POST',
-        headers: {
-            'Authorization': 'Bearer ' + jwtToken
-        },
-        contentType: 'application/json',
-        data: JSON.stringify({
-            Name: productName,
-            Price: productPrice
-        }),
-        success: function (data) {
-            alert('Product created successfully!');
-            $('#productName').val('');
-            $('#productPrice').val('');
-            getProducts(); // Refresh the product list after creating
-        },
-        error: function (error) {
-            console.error('Error creating product:', error);
-        }
-    });
-}
-
-function readCookie(name) {
-    var nameEQ = encodeURIComponent(name) + "=";
-    var ca = document.cookie.split(';');
-    for (var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) === ' ')
-            c = c.substring(1, c.length);
-        if (c.indexOf(nameEQ) === 0)
-            return decodeURIComponent(c.substring(nameEQ.length, c.length));
-    }
-    return null;
-}
-
-
-
-HomeController.cs 
-
-using Microsoft.AspNetCore.Mvc;
-using Product_UI.Models;
-using System.Diagnostics;
-
-namespace Product_UI.Controllers
-{
-    public class HomeController : Controller
-    {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
-
-        public IActionResult Index()
-        {
-            var jwtToken = Request.Cookies["user"];
-            if(string.IsNullOrEmpty(jwtToken))
-            
-            {
-                return RedirectToAction("Login", "Home");
-            }
-            return View();
-
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        public IActionResult Login()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-    }
-}
-
-
-Index.cshtml
-
-
-
-
-
-<h2>Product List</h2>
-
-<div id="productList">
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Product ID</th>
-                <th>Name</th>
-                <th>Price</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- This section will be populated with product list using jQuery -->
-        </tbody>
-    </table>
-</div>
-
-<h2>Create Product</h2>
-
-<div id="createProductForm">
-    <div class="form-group">
-        <label for="productName">Name</label>
-        <input type="text" class="form-control" id="productName">
-    </div>
-    <div class="form-group">
-        <label for="productPrice">Price</label>
-        <input type="text" class="form-control" id="productPrice">
-    </div>
-    <button id ="saveButton" class="btn btn-primary">Save</button>
-</div>
-
-
-
-login.cshtml
-
-
-
-    <h2>Login</h2>
-
-    <div id="loginForm">
-        <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text" class="form-control" id="username">
-        </div>
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" class="form-control" id="password">
-        </div>
-        <button id="loginButton" onclick="Adminlogin()" class="btn btn-primary">Login</button>
-    </div>
-
-
-
-
-
-
-function deleteProduct(id) {
-    var jwtToken = readCookie('user');
-
-    $.ajax({
-        url: `https://localhost:7102/api/product/${id}`,
-        method: 'DELETE',
-        headers: {
-            'Authorization': 'Bearer ' + jwtToken
-        },
-        success: function () {
-            alert('Product deleted successfully!');
-            getProducts(); // Refresh the product list after deletion
-        },
-        error: function (error) {
-            console.error('Error deleting product:', error);
-        }
-    });
-}
-
-System.NullReferenceException
-  HResult=0x80004003
-  Message=Object reference not set to an instance of an object.
-  Source=Product_UI
-  StackTrace:
-   at AspNetCoreGeneratedDocument.Views_Home_Index.<ExecuteAsync>d__0.MoveNext() in C:\Users\A0851291\source\repos\Product_Api\Product_UI\Views\Home\Index.cshtml:line 18
-
-
-Severity	Code	Description	Project	File	Line	Suppression State
-Error	CS0103	The name 'GetProductsFromApi' does not exist in the current context	Product_UI	C:\Users\A0851291\source\repos\Product_Api\Product_UI\Controllers\HomeController.cs	25	Active
-
-
-
-
-@{
-    var jwtToken = Request.Cookies["user"];
-    var isLoggedIn = !string.IsNullOrEmpty(jwtToken);
-}
-
-@if(isLoggedIn)
-{
-    <h2>Product List</h2>
-
-    <div id="productList">
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Product ID</th>
-                    <th>Name</th>
-                    <th>Price</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach(var product in ViewBag.Products)
-                {
-                    <tr>
-                        <td>@product.Id</td>
-                        <td>@product.Name</td>
-                        <td>@product.Price</td>
-                        <td>
-                            <button class="btn btn-danger" onclick="deleteProduct(@product.Id)">Delete</button>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-
-    <h2>Create Product</h2>
-
-    <div id="createProductForm">
-        <div class="form-group">
-            <label for="productName">Name</label>
-            <input type="text" class="form-control" id="productName">
-        </div>
-        <div class="form-group">
-            <label for="productPrice">Price</label>
-            <input type="text" class="form-control" id="productPrice">
-        </div>
-        <button id ="saveButton" class="btn btn-primary">Save</button>
-    </div>
-}
-
-
-
-Severity	Code	Description	Project	File	Line	Suppression State
-Error	CS0103	The name 'GetProductsFromApi' does not exist in the current context	Product_UI	C:\Users\A0851291\source\repos\Product_Api\Product_UI\Controllers\HomeController.cs	25	Active
-
-
-
-
-
-
-
-
