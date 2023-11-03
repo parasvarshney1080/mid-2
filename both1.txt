@@ -579,3 +579,8 @@ System.NullReferenceException
   StackTrace:
    at AspNetCoreGeneratedDocument.Views_Home_Index.<ExecuteAsync>d__0.MoveNext() in C:\Users\A0851291\source\repos\Product_Api\Product_UI\Views\Home\Index.cshtml:line 18
 
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS0103	The name 'GetProductsFromApi' does not exist in the current context	Product_UI	C:\Users\A0851291\source\repos\Product_Api\Product_UI\Controllers\HomeController.cs	25	Active
+
+
