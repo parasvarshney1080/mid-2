@@ -1,40 +1,5 @@
-  Failed to load resource: the server responded with a status of 404 ()
-:7102/api/product:1     Failed to load resource: the server responded with a status of 401 ()
-product.js:35 Error fetching products: Object
-error @ product.js:35
-c @ jquery.min.js:2
-fireWith @ jquery.min.js:2
-l @ jquery.min.js:2
-(anonymous) @ jquery.min.js:2
-load (async)
-send @ jquery.min.js:2
-ajax @ jquery.min.js:2
-getProducts @ product.js:17
-(anonymous) @ product.js:3
-e @ jquery.min.js:2
-t @ jquery.min.js:2
-setTimeout (async)
-(anonymous) @ jquery.min.js:2
-c @ jquery.min.js:2
-fireWith @ jquery.min.js:2
-fire @ jquery.min.js:2
-c @ jquery.min.js:2
-fireWith @ jquery.min.js:2
-ready @ jquery.min.js:2
-B @ jquery.min.js:2
-product.js:43 productName:  parsfg
-product.js:44 producPrice:  3545
-:7102/api/Product:1     Failed to load resource: the server responded with a status of 401 ()
-product.js:63 Error creating product: Object
-error @ product.js:63
-c @ jquery.min.js:2
-fireWith @ jquery.min.js:2
-l @ jquery.min.js:2
-(anonymous) @ jquery.min.js:2
-load (async)
-send @ jquery.min.js:2
-ajax @ jquery.min.js:2
-createProduct @ product.js:48
-(anonymous) @ product.js:9
-dispatch @ jquery.min.js:2
-v.handle @ jquery.min.js:2
+Uncaught ReferenceError: jwtToken is not defined
+    at getProducts (product.js:21:42)
+    at HTMLDocument.<anonymous> (product.js:3:5)
+    at e (jquery.min.js:2:30005)
+    at t (jquery.min.js:2:30307)
