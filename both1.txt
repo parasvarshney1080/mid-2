@@ -176,7 +176,7 @@ namespace Product_UI.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+         public IActionResult Index()
         {
             var jwtToken = Request.Cookies["user"];
             if(string.IsNullOrEmpty(jwtToken))
@@ -184,11 +184,12 @@ namespace Product_UI.Controllers
             {
                 return RedirectToAction("Login", "Home");
             }
-
-            ViewBag.Products = product;
+            List<Product> products = GetProductFromApi();
+            ViewBag.Products = products;
             return View();
 
         }
+
 
         public IActionResult Privacy()
         {
@@ -387,5 +388,9 @@ Error (active)	CS0103	The name 'product' does not exist in the current context	P
 
 Severity	Code	Description	Project	File	Line	Suppression State
 Error	CS0103	The name 'product' does not exist in the current context	Product_UI	C:\Users\A0851291\source\repos\Product_Api\Product_UI\Controllers\HomeController.cs	25	Active
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS0246	The type or namespace name 'Product' could not be found (are you missing a using directive or an assembly reference?)	Product_UI	C:\Users\A0851291\source\repos\Product_Api\Product_UI\Controllers\HomeController.cs	24	Active
+
 
 
