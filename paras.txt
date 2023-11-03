@@ -275,12 +275,12 @@ namespace Product_UI.Controllers
 }
 
 
-Uncaught ReferenceError: jwtToken is not defined
-    at getProducts (product.js:21:42)
+Uncaught ReferenceError: readcookie is not defined
+    at getProducts (product.js:18:20)
     at HTMLDocument.<anonymous> (product.js:3:5)
     at e (jquery.min.js:2:30005)
     at t (jquery.min.js:2:30307)
-getProducts @ product.js:21
+getProducts @ product.js:18
 (anonymous) @ product.js:3
 e @ jquery.min.js:2
 t @ jquery.min.js:2
@@ -307,6 +307,5 @@ fireWith @ jquery.min.js:2
 ready @ jquery.min.js:2
 B @ jquery.min.js:2
 :7095/favicon.ico:1     Failed to load resource: the server responded with a status of 404 ()
-
 
 
