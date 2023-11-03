@@ -394,3 +394,65 @@ Error	CS0246	The type or namespace name 'Product' could not be found (are you mi
 
 
 
+
+
+using Microsoft.AspNetCore.Mvc;
+using Product_UI.Models;
+using System.Diagnostics;
+using System.Net.Http;
+using System;
+using System.Collections.Generic;
+
+namespace Product_UI.Controllers
+{
+    public class HomeController : Controller
+    {
+        private readonly ILogger<HomeController> _logger;
+
+        public HomeController(ILogger<HomeController> logger)
+        {
+            _logger = logger;
+        }
+
+        public IActionResult Index()
+        {
+            var jwtToken = Request.Cookies["user"];
+            if (string.IsNullOrEmpty(jwtToken))
+            {
+                return RedirectToAction("Login", "Home");
+            }
+
+            List<Product> products = GetProductFromApi();
+            ViewBag.Products = products;
+            return View();
+        }
+
+        private List<Product> GetProductFromApi()
+        {
+            List<Product> products = new List<Product>();
+
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:7102/"); // Replace with your API base URL
+
+                HttpResponseMessage response = client.GetAsync("api/Product").Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    products = response.Content.ReadAsAsync<List<Product>>().Result;
+                }
+            }
+
+            return products;
+        }
+
+        // Rest of your code...
+
+        // If you have other action methods, keep them here
+
+        // If you have other utility methods, keep them here
+    }
+}
+
+
+
