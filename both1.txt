@@ -1,4 +1,4 @@
-ProductController.cs 
+productController.cs 
 
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -268,7 +268,7 @@ app.UseEndpoints(endpoints =>
 app.Run();
 
 
-login.js 
+login.js
 
 
 
@@ -460,7 +460,7 @@ function readCookie(name) {
 }
 
 
-HomeController.cs 
+HomeController.cs
 
 using Microsoft.AspNetCore.Mvc;
 using Product_UI.Models;
@@ -540,14 +540,14 @@ namespace Product_UI.Controllers
         }
     }
 
-public class Product
+    public class Product
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public decimal Price { get; set; }
     }
-}
 
+}
 
 index.cshtml
 
@@ -594,9 +594,6 @@ index.cshtml
         </div>
         <button id ="saveButton" class="btn btn-primary">Save</button>
     </div>
-    <script src="~/javascript/product.js"></script>
+   
     
-}
 
-Severity	Code	Description	Project	File	Line	Suppression State
-Error	CS1061	'HttpContent' does not contain a definition for 'ReadAsAsync' and no accessible extension method 'ReadAsAsync' accepting a first argument of type 'HttpContent' could be found (are you missing a using directive or an assembly reference?)	Product_UI	C:\Users\A0851291\source\repos\Product_Api\Product_UI\Controllers\HomeController.cs	47	Active
