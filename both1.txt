@@ -592,6 +592,9 @@ index.cshtml
             <label for="productPrice">Price</label>
             <input type="text" class="form-control" id="productPrice">
         </div>
+
+
+now listen here we are not facing any issue after running the project  but in action delete button is not showing so we are not performing the delete operation with this project so please rectify the error why we are facing these issue
         <button id ="saveButton" class="btn btn-primary">Save</button>
     </div>
    
