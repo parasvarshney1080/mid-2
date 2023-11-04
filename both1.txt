@@ -1,4 +1,4 @@
-ProductController.cs
+ProductController.cs 
 
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -268,7 +268,7 @@ app.UseEndpoints(endpoints =>
 app.Run();
 
 
-login.js
+login.js 
 
 
 
@@ -460,11 +460,13 @@ function readCookie(name) {
 }
 
 
-homecontroller.cs 
+HomeController.cs 
 
 using Microsoft.AspNetCore.Mvc;
 using Product_UI.Models;
 using System.Diagnostics;
+using System.Collections.Generic;
+using System.Net.Http;
 
 namespace Product_UI.Controllers
 {
@@ -496,16 +498,24 @@ namespace Product_UI.Controllers
         {
             List<Product> products = new List<Product>();
 
-            using (HttpClient client = new HttpClient())
+            try
             {
-                client.BaseAddress = new Uri("https://localhost:7102/"); // Replace with your API base URL
-
-                HttpResponseMessage response = client.GetAsync("api/Product").Result;
-
-                if (response.IsSuccessStatusCode)
+                using (HttpClient client = new HttpClient())
                 {
-                    products = response.Content.ReadAsAsync<List<Product>>().Result;
+                    client.BaseAddress = new Uri("https://localhost:7102/"); // Replace with your API base URL
+
+                    HttpResponseMessage response = client.GetAsync("api/Product").Result;
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        products = response.Content.ReadAsAsync<List<Product>>().Result;
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                // Handle the exception (e.g., log it)
+                _logger.LogError(ex, "Error fetching products from API");
             }
 
             return products;
@@ -542,14 +552,14 @@ index.cshtml
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>@Product ID</th>
-                    <th>@Name</th>
-                    <th>@Price</th>
-                    <th>@Actions</th>
+                    <th>@("Product ID")</th>
+                    <th>@("Name")</th>
+                    <th>@("Price")</th>
+                    <th>@("Actions")</th>
                 </tr>
             </thead>
             <tbody>
-                foreach(var product in ViewBag.Products)
+                @foreach(var product in ViewBag.Products)
                 {
                     <tr>
                         <td>@product.Id</td>
@@ -581,76 +591,23 @@ index.cshtml
     
 }
 
-
-Severity	Code	Description	Project	File	Line	Suppression State
-Error	CS0246	The type or namespace name 'Product' could not be found (are you missing a using directive or an assembly reference?)	Product_UI	C:\Users\A0851291\source\repos\Product_Api\Product_UI\Controllers\HomeController.cs	31	Active
-
-Severity	Code	Description	Project	File	Line	Suppression State
-Error	CS0246	The type or namespace name 'Product' could not be found (are you missing a using directive or an assembly reference?)	Product_UI	C:\Users\A0851291\source\repos\Product_Api\Product_UI\Controllers\HomeController.cs	24	Active
-
 Severity	Code	Description	Project	File	Line	Suppression State
 Error	CS0246	The type or namespace name 'Product' could not be found (are you missing a using directive or an assembly reference?)	Product_UI	C:\Users\A0851291\source\repos\Product_Api\Product_UI\Controllers\HomeController.cs	33	Active
 
 Severity	Code	Description	Project	File	Line	Suppression State
-Error	CS0246	The type or namespace name 'Product' could not be found (are you missing a using directive or an assembly reference?)	Product_UI	C:\Users\A0851291\source\repos\Product_Api\Product_UI\Controllers\HomeController.cs	33	Active
+Error	CS0246	The type or namespace name 'Product' could not be found (are you missing a using directive or an assembly reference?)	Product_UI	C:\Users\A0851291\source\repos\Product_Api\Product_UI\Controllers\HomeController.cs	26	Active
 
 Severity	Code	Description	Project	File	Line	Suppression State
-Error	CS1061	'HttpContent' does not contain a definition for 'ReadAsAsync' and no accessible extension method 'ReadAsAsync' accepting a first argument of type 'HttpContent' could be found (are you missing a using directive or an assembly reference?)	Product_UI	C:\Users\A0851291\source\repos\Product_Api\Product_UI\Controllers\HomeController.cs	43	Active
+Error	CS0246	The type or namespace name 'Product' could not be found (are you missing a using directive or an assembly reference?)	Product_UI	C:\Users\A0851291\source\repos\Product_Api\Product_UI\Controllers\HomeController.cs	35	Active
+
 
 Severity	Code	Description	Project	File	Line	Suppression State
-Error	CS0246	The type or namespace name 'Product' could not be found (are you missing a using directive or an assembly reference?)	Product_UI	C:\Users\A0851291\source\repos\Product_Api\Product_UI\Controllers\HomeController.cs	43	Active
+Error	CS0246	The type or namespace name 'Product' could not be found (are you missing a using directive or an assembly reference?)	Product_UI	C:\Users\A0851291\source\repos\Product_Api\Product_UI\Controllers\HomeController.cs	35	Active
+
 
 Severity	Code	Description	Project	File	Line	Suppression State
-Error (active)	CS0103	The name 'Product' does not exist in the current context	Product_UI	c:\Users\A0851291\source\repos\Product_Api\Product_UI\Views\Home\Index.cshtml	9	
+Error	CS1061	'HttpContent' does not contain a definition for 'ReadAsAsync' and no accessible extension method 'ReadAsAsync' accepting a first argument of type 'HttpContent' could be found (are you missing a using directive or an assembly reference?)	Product_UI	C:\Users\A0851291\source\repos\Product_Api\Product_UI\Controllers\HomeController.cs	47	Active
+
 
 Severity	Code	Description	Project	File	Line	Suppression State
-Error (active)	CS0103	The name 'Name' does not exist in the current context	Product_UI	c:\Users\A0851291\source\repos\Product_Api\Product_UI\Views\Home\Index.cshtml	10	
-
-Severity	Code	Description	Project	File	Line	Suppression State
-Error (active)	CS0103	The name 'Price' does not exist in the current context	Product_UI	c:\Users\A0851291\source\repos\Product_Api\Product_UI\Views\Home\Index.cshtml	11	
-
-Severity	Code	Description	Project	File	Line	Suppression State
-Error (active)	CS0103	The name 'Actions' does not exist in the current context	Product_UI	c:\Users\A0851291\source\repos\Product_Api\Product_UI\Views\Home\Index.cshtml	12	
-
-Severity	Code	Description	Project	File	Line	Suppression State
-Error (active)	CS0103	The name 'product' does not exist in the current context	Product_UI	c:\Users\A0851291\source\repos\Product_Api\Product_UI\Views\Home\Index.cshtml	19	
-
-Severity	Code	Description	Project	File	Line	Suppression State
-Error (active)	CS0103	The name 'product' does not exist in the current context	Product_UI	c:\Users\A0851291\source\repos\Product_Api\Product_UI\Views\Home\Index.cshtml	20	
-
-Severity	Code	Description	Project	File	Line	Suppression State
-Error (active)	CS0103	The name 'product' does not exist in the current context	Product_UI	c:\Users\A0851291\source\repos\Product_Api\Product_UI\Views\Home\Index.cshtml	21	
-
-Severity	Code	Description	Project	File	Line	Suppression State
-Error (active)	CS0103	The name 'product' does not exist in the current context	Product_UI	c:\Users\A0851291\source\repos\Product_Api\Product_UI\Views\Home\Index.cshtml	23	
-
-
-private List<Product> GetProductFromApi()
-{
-    List<Product> products = new List<Product>();
-
-    try
-    {
-        using (HttpClient client = new HttpClient())
-        {
-            client.BaseAddress = new Uri("https://localhost:7102/"); // Replace with your API base URL
-
-            HttpResponseMessage response = client.GetAsync("api/Product").Result;
-
-            if (response.IsSuccessStatusCode)
-            {
-                products = response.Content.ReadAsAsync<List<Product>>().Result;
-            }
-        }
-    }
-    catch (Exception ex)
-    {
-        // Handle the exception (e.g., log it)
-        _logger.LogError(ex, "Error fetching products from API");
-    }
-
-    return products;
-}
-
-
-
+Error	CS0246	The type or namespace name 'Product' could not be found (are you missing a using directive or an assembly reference?)	Product_UI	C:\Users\A0851291\source\repos\Product_Api\Product_UI\Controllers\HomeController.cs	47	Active
