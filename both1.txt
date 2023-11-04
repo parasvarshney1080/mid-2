@@ -539,6 +539,13 @@ namespace Product_UI.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
+
+public class Product
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public decimal Price { get; set; }
+    }
 }
 
 
@@ -592,22 +599,4 @@ index.cshtml
 }
 
 Severity	Code	Description	Project	File	Line	Suppression State
-Error	CS0246	The type or namespace name 'Product' could not be found (are you missing a using directive or an assembly reference?)	Product_UI	C:\Users\A0851291\source\repos\Product_Api\Product_UI\Controllers\HomeController.cs	33	Active
-
-Severity	Code	Description	Project	File	Line	Suppression State
-Error	CS0246	The type or namespace name 'Product' could not be found (are you missing a using directive or an assembly reference?)	Product_UI	C:\Users\A0851291\source\repos\Product_Api\Product_UI\Controllers\HomeController.cs	26	Active
-
-Severity	Code	Description	Project	File	Line	Suppression State
-Error	CS0246	The type or namespace name 'Product' could not be found (are you missing a using directive or an assembly reference?)	Product_UI	C:\Users\A0851291\source\repos\Product_Api\Product_UI\Controllers\HomeController.cs	35	Active
-
-
-Severity	Code	Description	Project	File	Line	Suppression State
-Error	CS0246	The type or namespace name 'Product' could not be found (are you missing a using directive or an assembly reference?)	Product_UI	C:\Users\A0851291\source\repos\Product_Api\Product_UI\Controllers\HomeController.cs	35	Active
-
-
-Severity	Code	Description	Project	File	Line	Suppression State
 Error	CS1061	'HttpContent' does not contain a definition for 'ReadAsAsync' and no accessible extension method 'ReadAsAsync' accepting a first argument of type 'HttpContent' could be found (are you missing a using directive or an assembly reference?)	Product_UI	C:\Users\A0851291\source\repos\Product_Api\Product_UI\Controllers\HomeController.cs	47	Active
-
-
-Severity	Code	Description	Project	File	Line	Suppression State
-Error	CS0246	The type or namespace name 'Product' could not be found (are you missing a using directive or an assembly reference?)	Product_UI	C:\Users\A0851291\source\repos\Product_Api\Product_UI\Controllers\HomeController.cs	47	Active
