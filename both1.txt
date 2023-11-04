@@ -598,5 +598,27 @@ now listen here we are not facing any issue after running the project  but in ac
         <button id ="saveButton" class="btn btn-primary">Save</button>
     </div>
    
-    
+
+
+
+
+function deleteProduct(productId) {
+    var jwtToken = readCookie('user');
+
+    $.ajax({
+        url: `https://localhost:7102/api/product/${productId}`,
+        method: 'DELETE',
+        headers: {
+            'Authorization': 'Bearer ' + jwtToken
+        },
+        success: function () {
+            alert('Product deleted successfully!');
+            getProducts(); // Refresh the product list after deletion
+        },
+        error: function (error) {
+            console.error('Error deleting product:', error);
+        }
+    });
+}
+
 
