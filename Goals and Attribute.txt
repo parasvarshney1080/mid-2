@@ -1,0 +1,12 @@
+I have created the API Demo Project and created the UI for this Api Project Using JQuery,Ajax and Asp.Net MVC All API 
+project code is written in ASP.Net Core With This project I have add the Jwt Token If only admin login then jwt Token will 
+be generate And verify the token with cookies After successfull then we only access the project and perform the action 
+with the project  
+
+
+
+I have Take the KT session which is provided by the Usha Mam. According to Her feedback I had Create SRs. After Creating 
+the SRs it was Easy for me to understand the Working of Broker Desktop
+
+The Demo Project which is Developed by me In API and and UI After it Working with All functionality then we had Deployed
+it on IIS server 
