@@ -513,3 +513,22 @@ Severity	Code	Description	Project	File	Line	Suppression State
 Error	CS0246	The type or namespace name 'Product' could not be found (are you missing a using directive or an assembly reference?)	Product_Api	C:\Users\A0851291\source\repos\Product_Api\Product_Api\Data\AppDbContext.cs	11	Active
 
 
+
+using Microsoft.EntityFrameworkCore;
+using Product_Api.Models; // Add this line
+
+namespace Product_Api.Data
+{
+    public class AppDbContext : DbContext
+    {
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+        {
+
+        }
+
+        public DbSet<Product_Api.Models.Product> Products { get; set; } // Use full namespace
+    }
+}
+
+
+
