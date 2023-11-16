@@ -1,4 +1,3 @@
-PM> dotnet tool install --global dotnet-ef --version 6.0.0
-You can invoke the tool using the following command: dotnet-ef
-Tool 'dotnet-ef' (version '6.0.0') was successfully installed.
+PM> dotnet ef migration add InitialCreate
+No project was found. Change the current working directory or use the --project option.
 PM> 
