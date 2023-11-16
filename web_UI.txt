@@ -1,17 +1,4 @@
-C:\Users\A0851291>cd C:\Users\A0851291\source\repos\Product_Api
-
-C:\Users\A0851291\source\repos\Product_Api>dir
- Volume in drive C is Windows
- Volume Serial Number is 04A4-3948
-
- Directory of C:\Users\A0851291\source\repos\Product_Api
-
-10/21/2023  10:18 PM    <DIR>          .
-10/21/2023  10:18 PM    <DIR>          ..
-11/08/2023  02:13 PM    <DIR>          Product_Api
-10/21/2023  10:18 PM             1,623 Product_Api.sln
-11/08/2023  02:13 PM    <DIR>          Product_UI
-               1 File(s)          1,623 bytes
-               4 Dir(s)  27,253,432,320 bytes free
+C:\Users\A0851291\source\repos\Product_Api>dotnet ef migration add InitialCreate
+No project was found. Change the current working directory or use the --project option.
 
 C:\Users\A0851291\source\repos\Product_Api>
