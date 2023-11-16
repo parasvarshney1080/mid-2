@@ -1,6 +1,7 @@
-C:\Users\A0851291>cd C:\User\A0851291\source\repos\Product_Api\Product_Api
-The system cannot find the path specified.
+C:\Users\A0851291\source\repos\Product_Api\Product_Api>dotnet ef migration add InitialCreate
+Build started...
+Build succeeded.
+Specify --help for a list of available options and commands.
+Unrecognized command or argument 'migration'
 
-C:\Users\A0851291>
-
-
+C:\Users\A0851291\source\repos\Product_Api\Product_Api>
