@@ -1,18 +1,4 @@
-PM> dotnet tool install --global dotnet-ef
-C:\Users\A0851291\AppData\Local\Temp\bgztyfhv.nzh\restore.csproj : error NU1202: Package dotnet-ef 8.0.0 is not compatible with net6.0 (.NETCoreApp,Version=v6.0) / any. Package dotnet-ef 8.0.0 supports: net8.0 (.NETCoreApp,Version=v8.0) / any
-dotnet : The tool package could not be restored.
-At line:1 char:1
-+ dotnet tool install --global dotnet-ef
-+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    + CategoryInfo          : NotSpecified: (The tool package could not be restored.:String) [], RemoteException
-    + FullyQualifiedErrorId : NativeCommandError
- 
-Tool 'dotnet-ef' failed to install. This failure may have been caused by:
-
-* You are attempting to install a preview release and did not use the --version option to specify the version.
-* A package by this name was found, but it was not a .NET tool.
-* The required NuGet feed cannot be accessed, perhaps because of an Internet connection problem.
-* You mistyped the name of the tool.
-
-For more reasons, including package naming enforcement, visit https://aka.ms/failure-installing-tool
+PM> dotnet tool install --global dotnet-ef --version 6.0.0
+You can invoke the tool using the following command: dotnet-ef
+Tool 'dotnet-ef' (version '6.0.0') was successfully installed.
 PM> 
