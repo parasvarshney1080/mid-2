@@ -1,4 +1,7 @@
-C:\Users\A0851291\source\repos\Product_Api>dotnet ef migration add InitialCreate
-No project was found. Change the current working directory or use the --project option.
+C:\Users\A0851291\source\repos\Product_Api> dotnet ef migration add InitialCreate --project Product_Api
+Build started...
+Build succeeded.
+Specify --help for a list of available options and commands.
+Unrecognized command or argument 'migration'
 
 C:\Users\A0851291\source\repos\Product_Api>
