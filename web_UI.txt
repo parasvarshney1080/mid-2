@@ -5,3 +5,4 @@ Specify --help for a list of available options and commands.
 Unrecognized command or argument 'migration'
 
 C:\Users\A0851291\source\repos\Product_Api\Product_Api>
+dotnet ef migrations add InitialCreate
