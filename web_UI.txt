@@ -1,7 +1,8 @@
-C:\Users\A0851291\source\repos\Product_Api\Product_Api>dotnet ef migration add InitialCreate
+C:\Users\A0851291\source\repos\Product_Api\Product_Api>dotnet ef migrations add InitialCreate
 Build started...
 Build succeeded.
-Specify --help for a list of available options and commands.
-Unrecognized command or argument 'migration'
+info: Microsoft.EntityFrameworkCore.Infrastructure[10403]
+      Entity Framework Core 6.0.0 initialized 'AppDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.0' with options: None
+The name 'InitialCreate' is used by an existing migration.
 
 C:\Users\A0851291\source\repos\Product_Api\Product_Api>
